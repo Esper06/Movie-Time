@@ -24,14 +24,25 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    content: {
+    imgLink: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date_created: {
-      type: DataTypes.DATE,
+    description: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
+    },
+    year: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    liked: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    disliked: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

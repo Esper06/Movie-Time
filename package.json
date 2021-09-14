@@ -1,0 +1,27 @@
+{
+  "name": "My-Movie-Tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esper06/My-Movie-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Esper06/My-Movie-Tracker/issues"
+  },
+  "homepage": "https://github.com/Esper06/My-Movie-Tracker#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "passport": "^0.4.1",
+    "sequelize": "^6.6.5",
+    "sessions": "0.0.2-7"
+  }
+}

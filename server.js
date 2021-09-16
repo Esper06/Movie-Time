@@ -15,4 +15,3 @@ dbConnection.sync({ force: false }).then(() => { //connects to the database and 
         console.log("Server listening on port " + PORT);
     });
 });
-

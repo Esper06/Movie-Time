@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Post extends Model {}
+class Movie extends Model {}
 
-Post.init(
+Movie.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -28,6 +28,10 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    trailerLink: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -36,11 +40,11 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    liked: {
+    likes: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    disliked: {
+    dislikes: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -50,8 +54,8 @@ Post.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "post",
+    modelName: "movie",
   }
 );
 
-module.exports = Post;
+module.exports = Movie;

@@ -1,21 +1,21 @@
 const router = require("express").Router();
 const { User, Movie, Comment, Like } = require("../models");
 const withAuth = require("../utils/auth");
-app.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
   res.render("login");
 });
-app.get("/register", (req, res) => {
+router.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.get("/search", (req, res) => {
+router.get("/search", (req, res) => {
   res.render("searchPage");
 });
-app.get("/dashboard", (req, res) => {
+router.get("/dashboard", (req, res) => {
   res.render("dashboard");
 });
 
-app.get("/home", (req, res) => {
+router.get("/home", (req, res) => {
   res.render("home");
 });
 router.get("/", async (req, res) => {

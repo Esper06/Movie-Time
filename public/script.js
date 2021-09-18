@@ -13,6 +13,11 @@ searchBtn.on("click", async (ev) => {
   const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
   const movieList = await findMovie(url);
 
+  const searchTypeTitle = `t=${movieName}`;
+  log("the movie is ", movieName);
+  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
+  const movieListTitle = await findMovie(urlTitle);
+  log(movieListTitle);
   $("#myMovieList").append(
     `<li class="list-group-item active">${movieList.Search[0].Title}</li>`
   );
@@ -34,6 +39,16 @@ searchBtn.on("click", async (ev) => {
     <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen style="width:600px ; height:400px"></iframe>
 </div>
+
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">${movieListTitle.Plot}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
     `
   );
 });

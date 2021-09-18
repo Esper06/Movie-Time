@@ -22,6 +22,9 @@ app.get("/register", (req, res) => {
 app.get("/", (req, res) => {
   res.render("home");
 });
+app.get("/search", (req, res) => {
+  res.render("searchPage");
+});
 // dbConnection.sync({ force: false }).then(() => { //connects to the database and logs out what port we are connected to
     app.listen(PORT, () => {
         console.log("Server listening on port " + PORT);

@@ -1,6 +1,6 @@
 const path = require("path"); //we bring in path
 const express = require("express"); //we bring in express
-const exphbs = require('express-handlebars'); //enables us to use express-handlebars
+const exphbs = require("express-handlebars"); //enables us to use express-handlebars
 const dbConnection = require("./config/connection"); //we bring in code from connection.js
 const hbs = exphbs.create({});
 const app = express(); //we create a variable to run express
@@ -22,6 +22,7 @@ app.get("/register", (req, res) => {
 app.get("/", (req, res) => {
   res.render("home");
 });
+
 app.get("/search", (req, res) => {
   res.render("searchPage");
 });
@@ -29,7 +30,7 @@ app.get("/dashboard", (req, res) => {
   res.render("dashboard");
 });
 // dbConnection.sync({ force: false }).then(() => { //connects to the database and logs out what port we are connected to
-    app.listen(PORT, () => {
-        console.log("Server listening on port " + PORT);
-    });
+app.listen(PORT, () => {
+  console.log("Server listening on port " + PORT);
+});
 // });

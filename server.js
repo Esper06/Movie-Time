@@ -22,7 +22,7 @@ app.get("/register", (req, res) => {
 app.get("/", (req, res) => {
   res.render("home");
 });
-app.get("dashboard", (req, res) => {
+app.get("/dashboard", (req, res) => {
   res.render("dashboard");
 });
 // dbConnection.sync({ force: false }).then(() => { //connects to the database and logs out what port we are connected to

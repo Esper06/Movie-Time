@@ -1,5 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 // Load User model
 const { User, Movie, Comment, Like } = require("../models");

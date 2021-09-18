@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 3000; //we then set a port to be used. It's 300
 const routes = require("./controllers");
 const hbs = exphbs.create({});
 
+// Passport Config
+require('./config/passport')(passport);
+
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars"); //makes our engine look for handlebars files
 

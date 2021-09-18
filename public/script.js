@@ -3,6 +3,13 @@ const log = console.log;
 const searchBtn = $("#searchBtn");
 const youtubeApiKey = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
 const omdbApiKey = "bcb8a4fa";
+
+const viewMore = async (movieName) => {
+  const searchTypeTitle = `t=${movieName}`;
+  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
+  const movieDetail = await findMovie(urlTitle);
+  return movieDetail;
+};
 searchBtn.on("click", async (ev) => {
   ev.preventDefault();
   const movieName = $("#movieName").val();
@@ -13,11 +20,10 @@ searchBtn.on("click", async (ev) => {
   const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
   const movieList = await findMovie(url);
 
-  const searchTypeTitle = `t=${movieName}`;
   log("the movie is ", movieName);
-  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
-  const movieListTitle = await findMovie(urlTitle);
-  log(movieListTitle);
+
+  const movieDetail = await viewMore(movieName);
+
   $("#myMovieList").append(
     `<li class="list-group-item active">${movieList.Search[0].Title}</li>`
   );
@@ -41,10 +47,10 @@ searchBtn.on("click", async (ev) => {
 </div>
 
 <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
+  <img class="card-img-top" src="${movieDetail.Poster}" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
-    <p class="card-text">${movieListTitle.Plot}</p>
+    <p class="card-text">${movieDetail.Plot}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>

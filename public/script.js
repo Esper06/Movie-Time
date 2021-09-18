@@ -23,7 +23,11 @@ searchBtn.on("click", async (ev) => {
   log("the movie is ", movieName);
 
   const movieDetail = await viewMore(movieName);
-
+  const searchTypeTitle = `t=${movieName}`;
+  log("the movie is ", movieName);
+  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
+  const movieListTitle = await findMovie(urlTitle);
+  log(movieListTitle);
   $("#myMovieList").append(
     `<li class="list-group-item active">${movieList.Search[0].Title}</li>`
   );
@@ -51,6 +55,10 @@ searchBtn.on("click", async (ev) => {
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">${movieDetail.Plot}</p>
+  <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">${movieListTitle.Plot}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>

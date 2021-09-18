@@ -40,11 +40,11 @@ Movie.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    likes: {
+    likes_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    dislikes: {
+    dislikes_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

@@ -12,9 +12,6 @@ const PORT = process.env.PORT || 3000; //we then set a port to be used. It's 300
 const routes = require("./controllers");
 const hbs = expressLayouts.create({});
 
-// Passport Config
-require("./config/passport")(passport);
-
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars"); //makes our engine look for handlebars files
 
@@ -49,19 +46,8 @@ app.use(express.static(path.join(__dirname, "public"))); //Joins our current dir
 
 app.use(routes);
 
-
-app.get("/profile", (req, res) => {
-  res.render("profile")
-});
-
-app.get("/search", (req, res) => {
-  res.render("searchPage");
-});
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
-});
-
 dbConnection.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
     console.log("Server listening on port " + PORT);
   });
+});

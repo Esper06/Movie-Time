@@ -25,11 +25,11 @@ Movie.init(
       allowNull: false,
     },
     imgLink: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     trailerLink: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     description: {
@@ -37,7 +37,7 @@ Movie.init(
       allowNull: false,
     },
     year: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     likes_count: {
@@ -47,6 +47,11 @@ Movie.init(
     dislikes_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

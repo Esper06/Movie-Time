@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const { User, Movie, Comment, Like } = require("../models");
 const withAuth = require("../utils/auth");
+router.get("/profile", (req, res) => {
+  res.render("profile");
+});
+
 router.get("/login", (req, res) => {
   res.render("login");
 });
@@ -18,6 +22,7 @@ router.get("/dashboard", (req, res) => {
 router.get("/home", (req, res) => {
   res.render("home");
 });
+
 router.get("/", async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
@@ -28,16 +33,16 @@ router.get("/", async (req, res) => {
         "title",
         "imgLink",
         "trailerLink",
-        "youtubeApi",
         "description",
         "year",
-        "likes",
-        "dislikes",
+        "likes_count",
+        "dislikes_count",
+        "date_created",
       ],
       include: [
         {
           model: User,
-          attributes: ["id, userName"],
+          attributes: ["id", "userName"],
         },
         {
           model: Comment,
@@ -49,17 +54,15 @@ router.get("/", async (req, res) => {
             "content",
             "date_created",
           ],
-          include: {
-            model: User,
-            attributes: ["id,userName"],
-          },
         },
       ],
     });
+
     // In the homepage template pass a single post object
-    const movies = dbMovieData.map((post) => post.get({ plain: true }));
+    const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
+
     // console.log(req.session, "homepage render");
-    console.log(movies[0]);
+    console.log("\n we found alll moviesm", movies[0]);
     res.render("home", {
       movies,
       loggedIn: req.session.loggedIn,
@@ -93,11 +96,17 @@ router.get("/post/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "title", "content", "created_at"],
+    attributes: ["id", "title", "content", "date_created"],
     include: [
       {
         model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+        attributes: [
+          "id",
+          "comment_text",
+          "post_id",
+          "user_id",
+          "date_created",
+        ],
         include: {
           model: User,
           attributes: ["username"],

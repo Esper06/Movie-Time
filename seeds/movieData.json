@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Avatar",
+    "user_id": 1,
+    "imgLink": "https://www.google.com/search?q=avatar&sxsrf=AOaemvJ1rCaeNk02wGvxpfsGNBtSKDnZ4A:1632247915856&tbm=isch&source=iu&ictx=1&fir=EjtSrMTdwp5H1M%252CUHUPOmPGfyBCqM%252C%252Fm%252F0bth54&vet=1&usg=AI4_-kRJ5y2Aeeis8RRyLjuNnR05eRaK0A&sa=X&sqi=2&ved=2ahUKEwj5vtap1ZDzAhXSSvEDHVX6AtgQ_B16BAg4EAE#imgrc=EjtSrMTdwp5H1M",
+    "trailerLink": "https://www.youtube.com/watch?v=5PSNL1qE6VY&ab_channel=20thCenturyStudios",
+    "description": "Avatar SCI movie",
+    "year": 2014,
+    "likes_count": 12,
+    "dislikes_count": 2
+  },
+  {
+    "title": "Avatar 2",
+    "user_id": 2,
+    "imgLink": "https://www.google.com/search?q=avatar&sxsrf=AOaemvJ1rCaeNk02wGvxpfsGNBtSKDnZ4A:1632247915856&tbm=isch&source=iu&ictx=1&fir=EjtSrMTdwp5H1M%252CUHUPOmPGfyBCqM%252C%252Fm%252F0bth54&vet=1&usg=AI4_-kRJ5y2Aeeis8RRyLjuNnR05eRaK0A&sa=X&sqi=2&ved=2ahUKEwj5vtap1ZDzAhXSSvEDHVX6AtgQ_B16BAg4EAE#imgrc=EjtSrMTdwp5H1M",
+    "trailerLink": "https://www.youtube.com/watch?v=5PSNL1qE6VY&ab_channel=20thCenturyStudios",
+    "description": "Avatar SCI movie",
+    "year": 2014,
+    "likes_count": 10,
+    "dislikes_count": 4
+  }
+]

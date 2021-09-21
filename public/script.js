@@ -36,9 +36,7 @@ searchBtn.on("click", async (ev) => {
       `<li class="list-group-item">${movieList.Search[i].Title}</li>`
     );
   }
-
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieList.Search[0].Title}  trailer&type=video&key=${youtubeApiKey}`;
-
   const vieoLink = await findMovie(youtubeUrl);
   log(movieList);
   log(
@@ -48,23 +46,31 @@ searchBtn.on("click", async (ev) => {
     `
     <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen style="width:600px ; height:400px"></iframe>
-</div>
-
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="${movieDetail.Poster}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">${movieDetail.Plot}</p>
+</div>`);
+$(".result").append(
+  `<div class="card" style="width: 18rem;">
   <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
+    <h5 class="card-title">${movieListTitle.Title}<small class="text-muted text-justify-right"> Release Date: ${movieListTitle.Released}</small></h5>
+    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">${movieListTitle.Actors}</small></h6>
+    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">${movieListTitle.Genre}</small></h6>
+    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">${movieListTitle.Ratings[1].Value}</span>
     <p class="card-text">${movieListTitle.Plot}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <button type="button" class="btn btn-light position-relative mx-3">
+    <i class="fas fa-thumbs-up fs-3 text-success"></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+      99+
+    </span>
+</button>
+<button type="button" class="btn btn-light position-relative mx-3">
+    <i class="fas fa-thumbs-down fs-3 text-danger"></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+      22
+    </span>
+</button>
   </div>
-</div>
-
-    `
-  );
+</div>`
+);
 });
 
 const findMovie = async (url) => {

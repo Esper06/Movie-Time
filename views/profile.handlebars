@@ -1,1 +1,42 @@
-<h1>user profile here</h1>
+
+
+<h1>User Profile</h1>
+
+ <!-- Adds a dropdown button -->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Profile Settings
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">Change Username</a></li>
+    <li><a class="dropdown-item" href="#">Change Password</a></li>
+    <li><a class="dropdown-item" href="#">Change Email</a></li>
+    <li><a class="dropdown-item" href="#">Change Api Key</a></li>
+  </ul>
+</div>
+
+
+{{#each Movie}}
+    <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">${movieListTitle.Title}<small class="text-muted text-justify-right"> Release Date: ${movieListTitle.Released}</small></h5>
+    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">${movieListTitle.Actors}</small></h6>
+    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">${movieListTitle.Genre}</small></h6>
+    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">${movieListTitle.Ratings[1].Value}</span>
+    <p class="card-text">${movieListTitle.Plot}</p>
+    <button type="button" class="btn btn-light position-relative mx-3">
+    <i class="fas fa-thumbs-up fs-3 text-success"></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+      99+
+    </span>
+</button>
+<button type="button" class="btn btn-light position-relative mx-3">
+    <i class="fas fa-thumbs-down fs-3 text-danger"></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+      22
+    </span>
+</button>
+  </div>
+</div>
+{{/each}}

@@ -42,18 +42,15 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["id", "userName"],
+          attributes: ["userName"],
         },
         {
           model: Comment,
-          attributes: [
-            "id",
-            "user_id",
-            "movie_id",
-            "user_id",
-            "content",
-            "date_created",
-          ],
+          attributes: ["id", "user_id", "movie_id", "content", "date_created"],
+          include: {
+            model: User,
+            attributes: ["userName"],
+          },
         },
       ],
     });
@@ -62,10 +59,11 @@ router.get("/", async (req, res) => {
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     // console.log(req.session, "homepage render");
-    console.log("\n we found alll moviesm", movies[0]);
+    console.log("\n we found alll movies", movies[0]);
     res.render("home", {
       movies,
       loggedIn: req.session.loggedIn,
+      userName: req.session.userName,
     });
   } catch (err) {
     console.log(err);

@@ -16,6 +16,7 @@ if (process.env.JAWSDB_URL) { //if heroku has the JAWSDB attachment do the below
       port: 3306,
     }
   );
+  console.log("Dtabase is connected");
 }
 
 module.exports = sequelize; //we then export the code out so it can be used elsewhere

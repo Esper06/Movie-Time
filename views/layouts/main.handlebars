@@ -9,49 +9,17 @@
 
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Tech Blog</title>
+  <title>Movie Time</title>
 </head>
 
 <body class="container bg-gray-800 bg-opacity-10">
 
   <section class="flex-column justify-space-around">
-    <nav class="navbar navbar-light bg-blue-200 rounded text-blue-900 mt-3 ">
-      <a class="btn navbar-brand mx-3" href="/">
-        <img src="/images/logo.png" width="150" alt="logo">
-      </a>
-
-      <ul class="nav justify-content-end fs-5 mx-3">
-        <li class="nav-item">
-          <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i> Home</a>
-        </li>
-        {{#if logged_in}}
-
-        <li class="nav-item ">
-          <a class="btn nav-link active .text-black-50" href="/profile"><i class="fas fa-id-card"></i> Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn nav-link" id="addMovie" href="/search"><i class="fas fa-search"></i> Search</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn nav-link" id="logout" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </li>
-        {{else}}
-
-        <li class="nav-item">
-          <a class="btn nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn nav-link" href="/register"><i class="fas fa-user-plus"></i> Register</a>
-        </li>
-
-        {{/if}}
+  
 
 
-      </ul>
-    </nav>
-
-
-    <main class="container container mt-5">
+    <main class="container container mt-2"> 
+    
       <!-- Render the sub layout -->
       {{{ body }}}
     </main>

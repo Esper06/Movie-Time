@@ -19,6 +19,15 @@ router.get("/username", (req, res) => {
   res.render("username");
 })
 
+router.get("/dashboard", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("dashboard");
+})
+
+
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");

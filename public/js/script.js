@@ -185,9 +185,34 @@ const addComment = async (event) => {
   }
 };
 
+const updateUserName = async (event) => {
+  const userName = $("#userChange").val().trim();
+  event.preventDefault();
+  if (userName) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/users/update", {
+      method: "PUT",
+      body: JSON.stringify({ userName: userName }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/profile");
+    } else {
+      errorHandler(response.statusText);
+      return;
+    }
+  } else {
+    errorHandler("Use Name can't be empty!");
+    return;
+  }
+};
+
 $(".login-form").on("submit", loginFormHandler);
 
 $(".signup-form").on("submit", signupFormHandler);
+$(".userName-form").on("submit", updateUserName);
 $("#addNewPost").on("click", addNewPost);
 $("#updatePost").on("click", updatePost);
 $("#deletePost").on("click", deletePost);

@@ -10,24 +10,40 @@ const viewMore = async (movieName) => {
   const movieDetail = await findMovie(urlTitle);
   return movieDetail;
 };
-searchBtn.on("click", async (ev) => {
+const findMovie = async (url) => {
+  movieList = [];
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    return data;
+  } catch (err) {
+    console.log("qweqwe", err);
+  }
+};
+
+searchBtn.on("submit", async (ev) => {
+  $("#alertMessage").empty();
   ev.preventDefault();
   const movieName = $("#movieName").val();
-  log("the movie is ", movieName);
-
   const searchType = `s=${movieName}`;
-  log("the movie is ", movieName);
   const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
+
   const movieList = await findMovie(url);
-
-  log("the movie is ", movieName);
-
+  if (movieList.Response == "False") {
+    errorHandler(movieList.Error);
+    return;
+  }
   const movieDetail = await viewMore(movieName);
   const searchTypeTitle = `t=${movieName}`;
-  log("the movie is ", movieName);
   const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
   const movieListTitle = await findMovie(urlTitle);
-  log(movieListTitle);
+  const { Actors, Genre, Plot, Poster } = movieListTitle;
+  log(Poster);
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieList.Search[0].Title}  trailer&type=video&key=${youtubeApiKey}`;
+  const vieoLink = await findMovie(youtubeUrl);
+  log(movieList);
+
   $("#myMovieList").append(
     `<li class="list-group-item active">${movieList.Search[0].Title}</li>`
   );
@@ -36,19 +52,19 @@ searchBtn.on("click", async (ev) => {
       `<li class="list-group-item">${movieList.Search[i].Title}</li>`
     );
   }
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieList.Search[0].Title}  trailer&type=video&key=${youtubeApiKey}`;
-  const vieoLink = await findMovie(youtubeUrl);
-  log(movieList);
+
   log(
     `https://www.youtube.com/results?search_query=${vieoLink.items[0].id.videoId}`
   );
+
   $(".trailer").append(
     `
     <div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen style="width:600px ; height:400px"></iframe>
-</div>`);
-$(".result").append(
-  `<div class="card" style="width: 18rem;">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen ></iframe>
+</div>`
+  );
+  $(".result").append(
+    `<div class="card " >
   <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">${movieListTitle.Title}<small class="text-muted text-justify-right"> Release Date: ${movieListTitle.Released}</small></h5>
@@ -70,12 +86,5 @@ $(".result").append(
 </button>
   </div>
 </div>`
-);
+  );
 });
-
-const findMovie = async (url) => {
-  movieList = [];
-  const res = await fetch(url);
-  const data = await res.json();
-  return data;
-};

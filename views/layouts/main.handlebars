@@ -5,34 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+   
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Movie Tracker</title>
+    <title>Tech Blog</title>
 </head>
-  <body>
+  <body class="container bg-gray-800 bg-opacity-10">
     
   <div class="flex-column justify-space-around">
- <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+ <nav class="navbar navbar-light bg-blue-900 rounded " >
   <a class="btn navbar-brand mx-3" href="/">
     <img src="/images/logo.png" width="200"  alt="logo">
   </a>
 
   <ul class="nav justify-content-end fs-5 mx-3">
+  <li class="nav-item">
+    <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i> Home</a>
+  </li>    
 {{#if logged_in}}
-     <li class="nav-item">
-    <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i></a>
-  </li>
+
   <li class="nav-item ">
     <a class="btn nav-link active .text-black-50" href="/profile"><i class="fas fa-id-card"></i> Profile</a>
   </li>
-
+   <li class="nav-item">
+    <a class="btn nav-link" id= "addMovie" href="/search"><i class="fas fa-plus-square"></i> Add movie</a>
+  </li>
    <li class="nav-item">
     <a class="btn nav-link" id= "logout" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </li>
   {{else}}
-       <li class="nav-item">
-    <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i></a>
-  </li>
+
   <li class="nav-item">
     <a class="btn nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
   </li>
@@ -51,12 +53,29 @@
       <!-- Render the sub layout -->
       {{{ body }}}
     </main>
-  </div>
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
-   <script src="/js/bootstrap.min.js"></script>
-
-<script src="/js/script.js"></script>
+    <footer>
  
+    </footer>
+  </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    
+    ></script>
+    <script
+      src="/js/bootstrap.min.js"
+  
+    ></script>
+
+
+</html>
+<script src="/js/script.js"></script>
+
+<script src="/js/movies.js"></script>
+
 </body>
 
 </html>

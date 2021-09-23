@@ -3,7 +3,6 @@ const express = require("express"); //we bring in express
 const expressLayouts = require("express-handlebars"); //enables us to use express-handlebars
 const dbConnection = require("./config/connection"); //we bring in code from connection.js
 
-const flash = require("connect-flash");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
@@ -29,16 +28,7 @@ const sess = {
 };
 
 app.use(session(sess));
-// Connect flash
-app.use(flash());
 
-// Global variables
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash("success_msg");
-  res.locals.error_msg = req.flash("error_msg");
-  res.locals.error = req.flash("error");
-  next();
-});
 
 app.use(express.json()); //Makes it so that we can take in json responses
 app.use(express.urlencoded({ extended: true })); //Makes it so that we can take in special url characters

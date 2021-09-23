@@ -1,29 +1,40 @@
 const router = require("express").Router();
 const { User, Movie, Comment, Like } = require("../models");
 const withAuth = require("../utils/auth");
-router.get("/profile", (req, res) => {
-  res.render("profile");
-});
 
 router.get("/login", (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
+  }
+  // else login
   res.render("login");
 });
+
 router.get("/register", (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
+  }
   res.render("register");
 });
 
-router.get("/search", (req, res) => {
-  res.render("searchPage");
+router.get("/search", withAuth, (req, res) => {
+  res.render("searchPage", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
 });
-router.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+router.get("/profile", withAuth, (req, res) => {
+  res.render("profile", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
 });
 
-router.get("/home", (req, res) => {
-  res.render("home");
-});
-
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({
@@ -55,15 +66,16 @@ router.get("/", async (req, res) => {
       ],
     });
 
-    // In the homepage template pass a single post object
+    // In the homepage template pass a single Movie object
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     // console.log(req.session, "homepage render");
     console.log("\n we found alll movies", movies[0]);
     res.render("home", {
       movies,
-      loggedIn: req.session.loggedIn,
+      logged_in: req.session.logged_in,
       userName: req.session.userName,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     console.log(err);
@@ -71,26 +83,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  // else login
-  res.render("login");
-});
-router.get("/signup", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  // else login
-  res.render("signup");
-});
-
-router.get("/post/:id", (req, res) => {
-  console.log(req.session, "post testing");
-  Post.findOne({
+router.get("/movie/:id", (req, res) => {
+  console.log(req.session, "Movie testing");
+  Movie.findOne({
     where: {
       id: req.params.id,
     },
@@ -101,7 +96,7 @@ router.get("/post/:id", (req, res) => {
         attributes: [
           "id",
           "comment_text",
-          "post_id",
+          "Movie_id",
           "user_id",
           "date_created",
         ],
@@ -116,20 +111,20 @@ router.get("/post/:id", (req, res) => {
       },
     ],
   })
-    .then((dbPostData) => {
-      if (!dbPostData) {
-        res.status(404).json({ message: "No post found with this id" });
+    .then((dbMovieData) => {
+      if (!dbMovieData) {
+        res.status(404).json({ message: "No Movie found with this id" });
         return;
       }
 
       // serialize the data
-      const post = dbPostData.get({ plain: true });
+      const Movie = dbMovieData.get({ plain: true });
 
       // pass data to template
-      console.log(post);
-      console.log(post.user.username);
-      res.render("single-post", {
-        post,
+      console.log(Movie);
+      console.log(Movie.user.username);
+      res.render("single-Movie", {
+        Movie,
         loggedIn: req.session.loggedIn,
       });
     })

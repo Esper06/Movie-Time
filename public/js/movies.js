@@ -1,7 +1,7 @@
 const log = console.log;
 
 const searchBtn = $("#searchBtn");
-const youtubeApiKey = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
+const youtubeApiKey = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
 const omdbApiKey = "bcb8a4fa";
 
 
@@ -23,7 +23,7 @@ const pick_color = () => {
 searchBtn.on("submit", async (ev) => {
   $("#alertMessage").empty();
   ev.preventDefault();
-  const movieName = $("#movieName").val();
+  const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
   const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
 

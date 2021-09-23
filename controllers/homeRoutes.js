@@ -19,6 +19,31 @@ router.get("/username", (req, res) => {
   res.render("username");
 })
 
+
+router.get("/password", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("password");
+})
+
+router.get("/email", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("email");
+})
+
+router.get("/apikey", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("apikey");
+})
+
 router.get("/dashboard", (req, res) => {
   if (!req.session.logged_in) {
     res.redirect("/login");

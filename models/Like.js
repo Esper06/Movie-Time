@@ -28,6 +28,11 @@ Like.init(
         key: "id",
       },
     },
+    isLike: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,

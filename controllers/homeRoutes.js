@@ -11,6 +11,14 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+router.get("/username", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("username");
+})
+
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");

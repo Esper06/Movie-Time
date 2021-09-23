@@ -28,6 +28,7 @@ searchBtn.on("click", async (ev) => {
   const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&apikey=${omdbApiKey}&Type=movie`;
   const movieListTitle = await findMovie(urlTitle);
   log(movieListTitle);
+
   $("#myMovieList").append(
     `<li class="list-group-item active">${movieList.Search[0].Title}</li>`
   );
@@ -39,6 +40,7 @@ searchBtn.on("click", async (ev) => {
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieList.Search[0].Title}  trailer&type=video&key=${youtubeApiKey}`;
   const vieoLink = await findMovie(youtubeUrl);
   log(movieList);
+
   log(
     `https://www.youtube.com/results?search_query=${vieoLink.items[0].id.videoId}`
   );
@@ -46,9 +48,10 @@ searchBtn.on("click", async (ev) => {
     `
     <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen style="width:600px ; height:400px"></iframe>
-</div>`);
-$(".result").append(
-  `<div class="card" style="width: 18rem;">
+</div>`
+  );
+  $(".result").append(
+    `<div class="card" style="width: 18rem;">
   <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">${movieListTitle.Title}<small class="text-muted text-justify-right"> Release Date: ${movieListTitle.Released}</small></h5>
@@ -70,7 +73,7 @@ $(".result").append(
 </button>
   </div>
 </div>`
-);
+  );
 });
 
 const findMovie = async (url) => {

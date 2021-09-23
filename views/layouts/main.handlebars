@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-   
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Tech Blog</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Tech Blog</title>
 </head>
-  <body class="container bg-gray-800 bg-opacity-10">
-    
-  <div class="flex-column justify-space-around">
- <nav class="navbar navbar-light bg-blue-200 rounded text-blue-900 " >
-  <a class="btn navbar-brand mx-3" href="/">
-    <img src="/images/logo.png" width="200"  alt="logo">
-  </a>
 
-  <ul class="nav justify-content-end fs-5 mx-3">
-  <li class="nav-item">
-    <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i> Home</a>
-  </li>    
-{{#if logged_in}}
+<body class="container bg-gray-800 bg-opacity-10">
 
-  <li class="nav-item ">
-    <a class="btn nav-link active .text-black-50" href="/profile"><i class="fas fa-id-card"></i> Profile</a>
-  </li>
-   <li class="nav-item">
-    <a class="btn nav-link" id= "addMovie" href="/search"><i class="fas fa-plus-square"></i> Add movie</a>
-  </li>
-   <li class="nav-item">
-    <a class="btn nav-link" id= "logout" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </li>
-  {{else}}
+  <section class="flex-column justify-space-around">
+    <nav class="navbar navbar-light bg-blue-200 rounded text-blue-900 mt-3 ">
+      <a class="btn navbar-brand mx-3" href="/">
+        <img src="/images/logo.png" width="150" alt="logo">
+      </a>
 
-  <li class="nav-item">
-    <a class="btn nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn nav-link" href="/register"><i class="fas fa-user-plus"></i> Register</a>
-  </li>
- 
-  {{/if}}
- 
-  
-</ul>
-</nav>
+      <ul class="nav justify-content-end fs-5 mx-3">
+        <li class="nav-item">
+          <a class="btn nav-link text-danger" href="/"><i class="fas fa-home"></i> Home</a>
+        </li>
+        {{#if logged_in}}
+
+        <li class="nav-item ">
+          <a class="btn nav-link active .text-black-50" href="/profile"><i class="fas fa-id-card"></i> Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn nav-link" id="addMovie" href="/search"><i class="fas fa-search"></i> Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn nav-link" id="logout" href="/"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </li>
+        {{else}}
+
+        <li class="nav-item">
+          <a class="btn nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn nav-link" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+        </li>
+
+        {{/if}}
+
+
+      </ul>
+    </nav>
 
 
     <main class="container container mt-5">
@@ -54,21 +56,12 @@
       {{{ body }}}
     </main>
     <footer>
- 
+
     </footer>
-  </div>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    
-    ></script>
-    <script
-      src="/js/bootstrap.min.js"
-  
-    ></script>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
 
 </html>

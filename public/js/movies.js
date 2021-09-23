@@ -59,33 +59,21 @@ searchBtn.on("submit", async (ev) => {
   }
 
   $(".movieListItem0").click(pickMovie);
-  //  cardCreat(movieListTitle);
 });
 
 const pickMovie = async (event) => {
-  log(event);
   const myTarget = event.target;
-  log(myTarget.innerHTML);
   let movieTitle = myTarget.innerHTML.split("-");
-  log(movieTitle);
-
   let searchTypeTitle = `t=${movieTitle[0]}`;
-
   const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${omdbApiKey}&Type=movie`;
   const pickedMovie = await findMovie(urlTitle);
-  log(pickedMovie);
   if (pickedMovie.Response == "False") {
     errorHandler(pickedMovie.Error);
     return;
   }
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApiKey}`;
   vieoLink = await findMovie(youtubeUrl);
-  log(vieoLink.items[0].id.videoId);
-  //   $(".trailer").append(
-  //     `
-  //     <div class="embed-responsive embed-responsive-16by9">
-  //   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}" allowfullscreen style="width:600px ; height:400px"></iframe>
-  // </div>`);
+
   pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
   cardCreat(pickedMovie);
 };
@@ -121,26 +109,4 @@ const cardCreat = (content) => {
 </div>
 `
   );
-
-  //   <div class="row">
-  //   <div class="col-sm-6">
-  //     <div class="card">
-  //       <div class="card-body">
-  //         <h5 class="card-title">Special title treatment</h5>
-  //         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  //         <a href="#" class="btn btn-primary">Go somewhere</a>
-  //       </div>
-  //     </div>
-  //   </div>
-
-  //   <div class="col-sm-6">
-  //     <div class="card">
-  //       <div class="card-body">
-  //         <h5 class="card-title">Special title treatment</h5>
-  //         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  //         <a href="#" class="btn btn-primary">Go somewhere</a>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>
 };

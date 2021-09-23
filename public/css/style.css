@@ -1,8 +1,8 @@
 *{
   box-sizing: border-box;
 }
-.seachbar, html { 
-  background-image:linear-gradient(to bottom, rgb(68, 0, 0) 0%,rgba(0,0,0,0.9) 10%), url(../images/background2.jpg); 
+.seachbar { 
+  background-image:linear-gradient(to bottom, rgb(68, 0, 0) 0%,rgba(0,0,0,0.1) 50%), url(../images/background2.jpg); 
   background-position: center;
 background-repeat: no-repeat;
 background-size: cover;

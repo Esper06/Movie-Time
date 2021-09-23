@@ -1,9 +1,8 @@
 const log = console.log;
-
+var movieData = {};
 const searchBtn = $("#searchBtn");
 const youtubeApiKey = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
 const omdbApiKey = "bcb8a4fa";
-
 
 const findMovie = async (url) => {
   movieList = [];
@@ -21,9 +20,10 @@ const pick_color = () => {
   return (Math.floor(Math.random() * 6) + 1) * 100;
 };
 searchBtn.on("submit", async (ev) => {
+  movieData = {};
   $("#alertMessage").empty();
   ev.preventDefault();
-  const movieName = $("#movieName").val();
+  const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
   const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
 
@@ -72,9 +72,10 @@ const pickMovie = async (event) => {
     return;
   }
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApiKey}`;
-  vieoLink = await findMovie(youtubeUrl);
+  // vieoLink = await findMovie(youtubeUrl);
 
-  pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
+  // pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
+  pickedMovie.trailer = `https://www.youtube.com/embed/6ziBFh3V1aM`;
   cardCreat(pickedMovie);
 };
 const cardCreat = (content) => {
@@ -100,7 +101,7 @@ const cardCreat = (content) => {
       <iframe class="embed-responsive-item w-100" src="${content.trailer}" allowfullscreen ></iframe>
     </div>
         </div>
-     <button type="submit" class="btn bg-green-400 w-100"> <i class="fas fa-photo-vide"></i> Add to List</button>
+     <button type="submit" id="submitMovie" class="btn bg-green-400 w-100"> <i class="fas fa-photo-vide"></i> Add to List</button>
        
     </div>
 
@@ -109,4 +110,38 @@ const cardCreat = (content) => {
 </div>
 `
   );
+  movieData = {
+    title: content.Title,
+    year: content.Year,
+    posterLink: content.Poster,
+    actors: content.Actors,
+    trailerLink: content.trailer,
+    rating: content.Ratings[0].Value,
+    plot: content.Plot,
+  };
+  $("#submitMovie").on("click", addNewMovie);
+};
+
+const addNewMovie = async () => {
+  console.log(movieData);
+  console.log(JSON.stringify(movieData));
+  if (movieData) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/movie", {
+      method: "POST",
+      body: JSON.stringify(movieData),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/");
+    } else {
+      errorHandler(response.statusText);
+      return;
+    }
+  } else {
+    errorHandler("Post title or content can't be empty!");
+    return;
+  }
 };

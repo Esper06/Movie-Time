@@ -24,7 +24,7 @@ Movie.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    imgLink: {
+    posterLink: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -32,9 +32,19 @@ Movie.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    description: {
+    plot: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    actors: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "actors",
+    },
+    rating: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "0%",
     },
     year: {
       type: DataTypes.INTEGER,
@@ -43,10 +53,12 @@ Movie.init(
     likes_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     dislikes_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     date_created: {
       type: DataTypes.DATE,

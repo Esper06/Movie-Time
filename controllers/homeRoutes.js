@@ -83,55 +83,6 @@ router.get("/", withAuth, async (req, res) => {
   }
 });
 
-router.get("/movie/:id", (req, res) => {
-  console.log(req.session, "Movie testing");
-  Movie.findOne({
-    where: {
-      id: req.params.id,
-    },
-    attributes: ["id", "title", "content", "date_created"],
-    include: [
-      {
-        model: Comment,
-        attributes: [
-          "id",
-          "comment_text",
-          "Movie_id",
-          "user_id",
-          "date_created",
-        ],
-        include: {
-          model: User,
-          attributes: ["username"],
-        },
-      },
-      {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-  })
-    .then((dbMovieData) => {
-      if (!dbMovieData) {
-        res.status(404).json({ message: "No Movie found with this id" });
-        return;
-      }
 
-      // serialize the data
-      const Movie = dbMovieData.get({ plain: true });
-
-      // pass data to template
-      console.log(Movie);
-      console.log(Movie.user.username);
-      res.render("single-Movie", {
-        Movie,
-        loggedIn: req.session.loggedIn,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
 
 module.exports = router;

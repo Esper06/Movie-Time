@@ -1,14 +1,28 @@
+   {{>navbar }}
+
+        {{!-- "id",
+        "user_id",
+        "title",
+        "posterLink",
+        "trailerLink",
+        "plot",
+        "year",
+        "actors",
+        "rating",
+        "likes_count",
+        "dislikes_count",
+        "date_created", --}}
 
 <div class="container flex d-flex">
  {{#each movies as |movie|}}
     <div class="card m-3" >
-  <img class="card-img-top" src="https://www.hollywoodreporter.com/wp-content/uploads/2019/03/avatar-publicity_still-h_2019.jpg?w=681&h=383&crop=1" style=" width:400px"alt="Card image cap">
+  <img class="card-img-top" src="{{movie.posterLink}}" style=" width:400px"alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title bg-info p-2">{{movie.title}}<small class="text-muted text-justify-right float-end">{{movie.year}}</small></h5>
-    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">{{movie.Actors}}</small></h6>
+    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">{{movie.actors}}</small></h6>
     <h6 class="card-text">Genre: <small class="text-muted text-justify-right">{{movie.genre}}</small></h6>
-    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{movie.ratings}}</span>
-    <p class="card-text">{{movie.Plot}}</p>
+    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{movie.rating}}</span>
+    <p class="card-text">{{movie.plot}}</p>
     <button type="button" class="btn btn-light position-relative mx-3">
     <i class="fas fa-thumbs-up fs-3 text-success"></i>
     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">

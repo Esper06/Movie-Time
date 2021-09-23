@@ -1,6 +1,6 @@
-const errHandler = (message) => {
+const errorHandler = (message) => {
   $("#alertMessage").empty();
-  errMessage = ` <div id="alertMessage" class="alert alert-warning alert-dismissible fade show " role="alert">
+  errMessage = ` <div id="alertMessage" class="alert alert-danger alert-dismissible fade show " role="alert">
   <strong><i class="fas fa-exclamation-triangle"></i></strong> <span>${message}</span> 
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>`;
@@ -12,6 +12,7 @@ function capitalizeFirstLetter(string) {
 }
 const loginFormHandler = async (event) => {
   event.preventDefault();
+  console.log("hi login");
   // Collect values from the login form
   const email = $("#email-login").val().trim().toLowerCase();
   const password = $("#password-login").val().trim();
@@ -24,16 +25,21 @@ const loginFormHandler = async (event) => {
     });
 
     resMessage = await response.json();
+    console.log("before response.ok");
+
     if (response.ok) {
+      console.log(" response.ok");
       document.location.replace("/");
     } else {
-      errHandler(resMessage.message);
+      console.log(" response not ok");
+
+      errorHandler(resMessage.message);
 
       return;
     }
     return;
   }
-  errHandler("Error: Fill in the requiered fileds!");
+  errorHandler("Error: Fill in the requiered fileds!");
 
   return;
 };
@@ -45,15 +51,15 @@ const signupFormHandler = async (event) => {
   const password = $("#password-signup").val().trim();
   const password2 = $("#password-signup2").val().trim();
   if (!userName || !email || !password | !password2) {
-    errHandler("Error: Fill in the requiered fileds");
+    errorHandler("Error: Fill in the requiered fileds");
     return;
   }
   if (password !== password2) {
-    errHandler("Error: Password should match!");
+    errorHandler("Error: Password should match!");
     return;
   }
   if (password.length < 8) {
-    errHandler("Error: Password should be at least 8 characters!");
+    errorHandler("Error: Password should be at least 8 characters!");
     return;
   }
   if (userName && email && password && password2) {
@@ -66,7 +72,7 @@ const signupFormHandler = async (event) => {
     if (response.ok) {
       document.location.replace("/profile");
     } else {
-      errHandler(resMessage.message);
+      errorHandler(resMessage.message);
       return;
     }
   }
@@ -89,11 +95,11 @@ const addNewPost = async (event) => {
       // If successful, redirect the browser to the profile page
       document.location.replace("/profile");
     } else {
-      errHandler(response.statusText);
+      errorHandler(response.statusText);
       return;
     }
   } else {
-    errHandler("Post title or content can't be empty!");
+    errorHandler("Post title or content can't be empty!");
     return;
   }
 };
@@ -115,11 +121,11 @@ const updatePost = async (event) => {
       // If successful, redirect the browser to the profile page
       document.location.replace("/profile");
     } else {
-      errHandler(response.statusText);
+      errorHandler(response.statusText);
       return;
     }
   } else {
-    errHandler("Title or content can't be empty!");
+    errorHandler("Title or content can't be empty!");
     return;
   }
 };
@@ -133,7 +139,7 @@ const deletePost = async (event) => {
     // If successful, redirect the browser to the profile page
     document.location.replace("/profile");
   } else {
-    errHandler(response.statusText);
+    errorHandler(response.statusText);
     return;
   }
 };
@@ -146,7 +152,7 @@ const logout = async () => {
   if (response.ok) {
     document.location.replace("/");
   } else {
-    errHandler(response.statusText);
+    errorHandler(response.statusText);
     return;
   }
 };
@@ -169,11 +175,11 @@ const addComment = async (event) => {
       // If successful, redirect the browser to the profile page
       document.location.replace("/");
     } else {
-      errHandler(response.statusText);
+      errorHandler(response.statusText);
       return;
     }
   } else {
-    errHandler("content can't be empty!");
+    errorHandler("content can't be empty!");
 
     return;
   }

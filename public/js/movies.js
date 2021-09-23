@@ -1,7 +1,7 @@
 const log = console.log;
 var movieData = {};
 const searchBtn = $("#searchBtn");
-const youtubeApiKey = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
+const youtubeApiKey = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
 const omdbApiKey = "bcb8a4fa";
 
 const findMovie = async (url) => {

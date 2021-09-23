@@ -1,37 +1,77 @@
+{{!-- to shopw alert if the Movie not found --}}
 <div id="alertMessage"></div>
 
 <div class="container seachbar pt-2">
-<div class="alert alert-success" role="alert">
-    <h6><i class="fas fa-film"></i> Input The Movie Name </h6>
+  <div class="alert alert-success"  role="alert">
+    <h6><i class="fas fa-film"></i> Input The Movie Name</h6>
     <form action="submit" id="searchBtn">
-    <div class="input-group rounded">
-        <input type="search" id="movieName" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-        <span class="input-group-text border-0" >
-         <button class="btn bg-transparent"><i class="fas fa-search" href="/search"></i></button> 
+      <div class="input-group rounded">
+        <input
+          type="search"
+          id="movieName"
+          class="form-control rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <span class="input-group-text border-0">
+          <button class="btn bg-transparent">
+            <i class="fas fa-search" href="/search"></i>
+          </button>
         </span>
-    </div> 
-    </form>
-
-</div>
-   
-  <div class="container">
-      <div class="row">
-        <div class="col">
-          <ul class="list-group" id="myMovieList">
-
-          </ul>
-        </div>
-        <div class="col-6">
-          <div class="trailer">
-
-          </div>
-        </div>
-        <div class="col">
-          <div class="result" id="result-card">
-
-          </div>
-        </div>
       </div>
+    </form>
+  </div>
+  <div id="SeachContainer"></div>
+      <div class="carousel-inner" id="movieList"></div>
+
+  <div class="result align-items-stretch mb-4" id="result-card"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <ul class="list-group" id="myMovieList"></ul>
+      </div>
+      <div class="col-6">
+        <div class="trailer"></div>
+      </div>
+      <div class="col">
+        <div class="result" id="result-card"></div>
+      </div>
+    </div>
+  </div>
+
 </div>
-</div>
+
+{{!-- <div
+  class="btn-group row"
+  id="results"
+  role="group"
+  aria-label="Basic mixed styles example"
+></div>
+
+<div class="container w-25">
+  <div
+    id="carouselExampleControls"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  > --}}
+    {{!-- <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div> --}}

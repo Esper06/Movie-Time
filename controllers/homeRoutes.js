@@ -16,17 +16,24 @@ router.get("/username", (req, res) => {
     res.redirect("/login");
     return;
   }
-  res.render("username");
-})
-
+  res.render("username", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
+});
 
 router.get("/password", (req, res) => {
   if (!req.session.logged_in) {
     res.redirect("/login");
     return;
   }
-  res.render("password");
-})
+  res.render("password", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
+});
 
 router.get("/email", (req, res) => {
   if (!req.session.logged_in) {
@@ -34,7 +41,7 @@ router.get("/email", (req, res) => {
     return;
   }
   res.render("email");
-})
+});
 
 router.get("/apikey", (req, res) => {
   if (!req.session.logged_in) {
@@ -42,7 +49,7 @@ router.get("/apikey", (req, res) => {
     return;
   }
   res.render("apikey");
-})
+});
 
 router.get("/dashboard", (req, res) => {
   if (!req.session.logged_in) {
@@ -50,8 +57,7 @@ router.get("/dashboard", (req, res) => {
     return;
   }
   res.render("dashboard");
-})
-
+});
 
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {
@@ -68,14 +74,49 @@ router.get("/search", withAuth, (req, res) => {
     user_id: req.session.user_id,
   });
 });
-router.get("/profile", withAuth, (req, res) => {
+
+router.get("/profile", withAuth, async (req, res) => {
+  const UserData = await User.findOne({
+    where: {
+      id: req.session.user_id,
+    },
+  });
+  console.log(UserData.get({ plain: true }));
+  const currentUser = await UserData.get({ plain: true });
+
+  const userMovies = await Movie.findAll({
+    where: {
+      user_id: req.session.user_id,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["userName"],
+      },
+      {
+        model: Comment,
+        include: [User],
+        attributes: {
+          exclude: ["password"],
+        },
+      },
+    ],
+    order: [["date_created", "DESC"]],
+  });
+
+  console.log("\n in profile route\n");
+
+  const blogMovies = userMovies.map((movie) => movie.get({ plain: true }));
+  console.log(blogMovies);
+
   res.render("profile", {
+    blogMovies,
     logged_in: req.session.logged_in,
     userName: req.session.userName,
     user_id: req.session.user_id,
+    currentUser,
   });
 });
-
 router.get("/", withAuth, async (req, res) => {
   // console.log(req.session, "homepage render");
   try {

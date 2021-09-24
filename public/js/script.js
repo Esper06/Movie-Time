@@ -129,11 +129,11 @@ const updatePost = async (event) => {
     return;
   }
 };
-const deletePost = async (event) => {
-  const id = parseInt($("#post-id").text().trim());
+const delteMovie = async (event) => {
+  const id = parseInt($("#movie-id").text().trim());
 
   event.preventDefault();
-  const response = await fetch(`/api/post/${id}`, { method: "DELETE" });
+  const response = await fetch(`/api/movie/${id}`, { method: "DELETE" });
 
   if (response.ok) {
     // If successful, redirect the browser to the profile page
@@ -215,7 +215,7 @@ $(".signup-form").on("submit", signupFormHandler);
 $(".userName-form").on("submit", updateUserName);
 $("#addNewPost").on("click", addNewPost);
 $("#updatePost").on("click", updatePost);
-$("#deletePost").on("click", deletePost);
+$(".delteMovie").on("click", delteMovie);
 $("#addComment").on("click", addComment);
 
 $("#logout").on("click", logout);

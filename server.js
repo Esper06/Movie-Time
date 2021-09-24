@@ -9,7 +9,9 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const app = express(); //initializse app variable with express
 const PORT = process.env.PORT || 3000; //we then set a port to be used. It's 3000 by default
 const routes = require("./controllers");
-const hbs = expressLayouts.create({});
+const helpers = require("./utils/helpers");
+
+const hbs = expressLayouts.create({ helpers });
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars"); //makes our engine look for handlebars files

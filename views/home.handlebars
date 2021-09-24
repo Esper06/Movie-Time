@@ -1,44 +1,23 @@
    {{>navbar }}
 
-        {{!-- "id",
-        "user_id",
-        "title",
-        "posterLink",
-        "trailerLink",
-        "plot",
-        "year",
-        "actors",
-        "rating",
-        "likes_count",
-        "dislikes_count",
-        "date_created", --}}
-
-<div class="container flex d-flex">
- {{#each movies as |movie|}}
-    <div class="card m-3" >
-  <img class="card-img-top" src="{{movie.posterLink}}" style=" width:400px"alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title bg-info p-2">{{movie.title}}<small class="text-muted text-justify-right float-end">{{movie.year}}</small></h5>
-    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">{{movie.actors}}</small></h6>
-    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">{{movie.genre}}</small></h6>
-    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{movie.rating}}</span>
-    <p class="card-text">{{movie.plot}}</p>
-    <button type="button" class="btn btn-light position-relative mx-3">
-    <i class="fas fa-thumbs-up fs-3 text-success"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-      99+
-    </span>
-</button>
-<button type="button" class="btn btn-light position-relative mx-3 float-end">
-    <i class="fas fa-thumbs-down fs-3 text-danger"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-      22
-    </span>
-</button>
-  </div>
+{{#if logged_in}}
+<div class="alert alert-danger" role="alert">
+  <h1 class="fs-4"><i class='fas fa-user-check' style='font-size:28px;color:red'></i> {{userName}}</h1>
 </div>
-{{/each}}
+{{/if}}
 
-</div>
 
- 
+
+<ol class="list-group ">
+  {{#each movies as |movie|}}
+
+  <li class="list-group-item my-3 bg-dark">
+    {{> movie-detail movie }}
+ <p class="my-4"><span><i class="fas fa-comment text-warning fs-5"> Comments</i></span> <span class=" float-end" id=""> <a href="/comment/{{post.id}}"><i  class=" fas fa-reply text-info "> Reply</i></a></span></p>
+
+    {{#each movie.comments as |cmnt| }}
+        {{> comment cmnt}}
+    {{/each}}
+    </li>
+  {{/each}}
+</ol>

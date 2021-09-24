@@ -209,10 +209,89 @@ const updateUserName = async (event) => {
   }
 };
 
+const updatePassword = async (event) => {
+  const password = $("#passChange").val().trim();
+  event.preventDefault();
+  if (password) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/users/update", {
+      method: "PUT",
+      body: JSON.stringify({ password: password }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/profile");
+    } else {
+      errorHandler(response.statusText);
+      return;
+    }
+  } else {
+    errorHandler("Password can't be empty!");
+    return;
+  }
+};
+
+const updateEmail = async (event) => {
+  const email = $("#emailChange").val().trim();
+  event.preventDefault();
+  if (email) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/users/update", {
+      method: "PUT",
+      body: JSON.stringify({ email: email }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/profile");
+    } else {
+      errorHandler(response.statusText);
+      return;
+    }
+  } else {
+    errorHandler("Email can't be empty!");
+    return;
+  }
+};
+
+const updateApiKey = async (event) => {
+  const apiKey = $("#apiChange").val().trim();
+  event.preventDefault();
+  if (apiKey) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/users/update", {
+      method: "PUT",
+      body: JSON.stringify({ apiKey: apiKey }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/profile");
+    } else {
+      errorHandler(response.statusText);
+      return;
+    }
+  } else {
+    errorHandler("Api key can't be empty!");
+    return;
+  }
+};
+
 $(".login-form").on("submit", loginFormHandler);
 
 $(".signup-form").on("submit", signupFormHandler);
+
 $(".userName-form").on("submit", updateUserName);
+$(".password-form").on("submit", updatePassword);
+$(".email-form").on("submit", updateEmail);
+$(".apikey-form").on("submit", updateApiKey);
+
+
+
 $("#addNewPost").on("click", addNewPost);
 $("#updatePost").on("click", updatePost);
 $("#deletePost").on("click", deletePost);

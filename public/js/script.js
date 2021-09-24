@@ -130,10 +130,10 @@ const updatePost = async (event) => {
   }
 };
 const delteMovie = async (event) => {
-  const targeted = event.target;
-  console.log(targeted);
-  const id = targeted.getAttribute("data-id");
   event.preventDefault();
+  const targeted = event.target;
+  const id = parseInt(targeted.getAttribute("data-id").trim());
+  
 
   const response = await fetch(`/api/movie/${id}`, { method: "DELETE" });
 

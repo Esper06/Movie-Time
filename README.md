@@ -1,4 +1,4 @@
-# My-Movie-Tracker
+# Movie-Time
 
 ## Description
 
@@ -29,7 +29,7 @@ All of the work found within our project was provided or created by us: Medhi, M
 
 Matthew: https://github.com/Esper06
 
-Medhi: https://github.com/MehdiMahmud79
+Mehdi: https://github.com/MehdiMahmud79
 
 Lee: https://github.com/Lee0997
 

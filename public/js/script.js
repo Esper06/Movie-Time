@@ -130,9 +130,11 @@ const updatePost = async (event) => {
   }
 };
 const delteMovie = async (event) => {
-  const id = parseInt($("#movie-id").text().trim());
-
+  const targeted = event.target;
+  console.log(targeted);
+  const id = targeted.getAttribute("data-id");
   event.preventDefault();
+
   const response = await fetch(`/api/movie/${id}`, { method: "DELETE" });
 
   if (response.ok) {
@@ -143,6 +145,7 @@ const delteMovie = async (event) => {
     return;
   }
 };
+
 const logout = async () => {
   const response = await fetch("/api/users/logout", {
     method: "POST",
@@ -290,11 +293,9 @@ $(".password-form").on("submit", updatePassword);
 $(".email-form").on("submit", updateEmail);
 $(".apikey-form").on("submit", updateApiKey);
 
-
-
 $("#addNewPost").on("click", addNewPost);
 $("#updatePost").on("click", updatePost);
-$(".delteMovie").on("click", delteMovie);
+$(".deleteMovie").on("click", delteMovie);
 $("#addComment").on("click", addComment);
 
 $("#logout").on("click", logout);

@@ -1,11 +1,11 @@
 {{>navbar }}
 
-
-<h1>User Profile</h1>
+<h1 class="text-green-500">User Profile</h1>
+<a class="btn   text-yellow-700 bg-yellow-400 " href="/search"><i class="fas fa-plus-circle text-yellow-800"></i> Add movie</a>
 
  <!-- Adds a dropdown button -->
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+<div class="dropdown float-end ">
+  <button class="btn bg-yellow-400 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     Profile Settings
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -16,28 +16,36 @@
   </ul>
 </div>
 
+<div class="row  p-4">
+{{#each blogMovies}}
 
-{{#each Movie}}
-    <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="${movieListTitle.Poster}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">${movieListTitle.Title}<small class="text-muted text-justify-right"> Release Date: ${movieListTitle.Released}</small></h5>
-    <h6 class="card-text">Stars: <small class="text-muted text-justify-right">${movieListTitle.Actors}</small></h6>
-    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">${movieListTitle.Genre}</small></h6>
-    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">${movieListTitle.Ratings[1].Value}</span>
-    <p class="card-text">${movieListTitle.Plot}</p>
-    <button type="button" class="btn btn-light position-relative mx-3">
-    <i class="fas fa-thumbs-up fs-3 text-success"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-      99+
-    </span>
+    <div class="card m-2 col-4 bg-yellow-100" style="width: 18rem;">
+      <p class=" d-none " id="movie-id">{{id}}</p>
+<div >
+   <button data-id="{{id}}" type="submit" class="btn float-end deleteMovie "><i class="fa fa-trash text-red-500" aria-hidden="true"></i> {{id}}</button>
+ 
+</div>
+
+
+  <img class="card-img-top" src="{{posterLink}}" alt="Card image cap">
+  <div class="card-body ">
+    <h5 class="card-title">{{title}}<small class="text-muted text-justify-right"> Release Date: {{blogMovies.year}}</small></h5>
+    <h6 class="card-text">Actors: <small class="text-muted text-justify-right">{{actors}}</small></h6>
+    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">{{genre}}</small></h6>
+    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{rating}}</span>
+    <hr>
+    <div >
+     <button type="button" class="btn  position-relative mx-3">
+    <i class="fas fa-thumbs-up fs-5 text-success"> 99</i>
+
 </button>
-<button type="button" class="btn btn-light position-relative mx-3">
-    <i class="fas fa-thumbs-down fs-3 text-danger"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-      22
-    </span>
-</button>
+<button type="button" class="btn  position-relative mx-3">
+    <i class="fas fa-thumbs-down fs-5 text-danger">22</i>
+
+</button>     
+    </div>
+
   </div>
 </div>
 {{/each}}
+</div>

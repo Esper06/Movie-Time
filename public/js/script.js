@@ -129,11 +129,13 @@ const updatePost = async (event) => {
     return;
   }
 };
-const deletePost = async (event) => {
-  const id = parseInt($("#post-id").text().trim());
-
+const delteMovie = async (event) => {
+  const targeted = event.target;
+  console.log(targeted);
+  const id = targeted.getAttribute("data-id");
   event.preventDefault();
-  const response = await fetch(`/api/post/${id}`, { method: "DELETE" });
+
+  const response = await fetch(`/api/movie/${id}`, { method: "DELETE" });
 
   if (response.ok) {
     // If successful, redirect the browser to the profile page
@@ -143,6 +145,7 @@ const deletePost = async (event) => {
     return;
   }
 };
+
 const logout = async () => {
   const response = await fetch("/api/users/logout", {
     method: "POST",
@@ -290,11 +293,9 @@ $(".password-form").on("submit", updatePassword);
 $(".email-form").on("submit", updateEmail);
 $(".apikey-form").on("submit", updateApiKey);
 
-
-
 $("#addNewPost").on("click", addNewPost);
 $("#updatePost").on("click", updatePost);
-$("#deletePost").on("click", deletePost);
+$(".deleteMovie").on("click", delteMovie);
 $("#addComment").on("click", addComment);
 
 $("#logout").on("click", logout);

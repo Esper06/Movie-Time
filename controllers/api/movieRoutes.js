@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { Movie } = require("../../models");
+const { Movie, LikedMovie, Comment, User } = require("../../models");
 const withAuth = require("../../utils/auth");
-
+const { Op, sequelize } = require("sequelize");
 router.post("/", withAuth, async (req, res) => {
   console.log("\ntrying to add a movie\n");
   try {
@@ -70,6 +70,53 @@ router.put("/:id", async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+});
+router.put("/like/:id", async (req, res) => {
+  const LikeById = await LikedMovie.findOne({
+    where: {
+      [Op.and]: [{ user_id: req.session.user_id }, { movie_id: req.params.id }],
+    },
+  });
+  console.log("\n Like is \n", LikeById);
+  try {
+    if (LikeById) {
+      console.log("\n trying to update Like \n");
+
+      const newLike = await LikedMovie.update(
+        {
+          ...req.body,
+        },
+        {
+          where: {
+            [Op.and]: [
+              { user_id: req.session.user_id },
+              { movie_id: req.params.id },
+            ],
+          },
+        }
+      );
+      res.status(200).json(newLike);
+    } else {
+      console.log("\n trying to create Like \n");
+
+      const newLike = await LikedMovie.create({
+        ...req.body,
+        user_id: req.session.user_id,
+        movie_id: req.params.id,
+      });
+      res.status(200).json(newLike);
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+  console.log("\nLikecount\n");
+
+  const Likecount = await LikedMovie.findAndCountAll({
+    where: {
+      [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
+    },
+  });
+  console.log("\n totla like is", Likecount.count);
 });
 router.delete("/:id", withAuth, async (req, res) => {
   try {

@@ -1,6 +1,6 @@
 {{> navbar}}
 
-<h1 class="text-red-200">{{movie.user.id}}</h1>
+<h1 class="text-red-200 m-2 text-center bg-red-900">{{movie.title}}, {{movie.year}}</h1>
 <div id="alertMessage" class=" m-2"></div>
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
@@ -8,8 +8,8 @@
       <h2 class="text-center mb-3"><i class="fas fa-sign-in-alt text-danger"></i> Add Your comment</h2>
 
 <form class="login-form">
-  <div class="invisible" id="post-id">{{movie.id}}</div>
-  <div class="invisible" id="user-id">{{movie.user.id}}</div>
+  <div class="d-none" id="movie-id">{{movie.id}}</div>
+  <div class="d-none" id="user-id">{{movie.user.id}}</div>
   <div class="mb-2">
     <label for="content" class="form-label"><i class="far fa-comment-dots"></i></label>
     <textarea type="text" class=" form-control my-3" id="comment-content" style="min-height: 150px" placeholder="Your Comment"></textarea>

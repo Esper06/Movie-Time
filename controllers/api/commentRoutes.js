@@ -17,7 +17,7 @@ router.post("/", withAuth, async (req, res) => {
 
 router.get("/:id", withAuth, async (req, res) => {
   try {
-    const commentById = await Comment.findOne({
+    const movieById = await Movie.findOne({
       where: {
         id: req.params.id,
       },
@@ -37,8 +37,8 @@ router.get("/:id", withAuth, async (req, res) => {
         },
       ],
     });
-    if (!postById) {
-      res.status(404).json({ message: "No post found with this id" });
+    if (!movieById) {
+      res.status(404).json({ message: "No movie found with this id" });
       return;
     }
     const post = postById.get({ plain: true });

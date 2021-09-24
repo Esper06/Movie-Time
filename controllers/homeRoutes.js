@@ -82,7 +82,7 @@ router.get("/comment/:id", withAuth, async (req, res) => {
       where: {
         id: req.params.id,
       },
-      attributes: ["id", "title", "date_created"],
+      attributes: ["id", "title", "year", "date_created"],
       include: [
         {
           model: Comment,

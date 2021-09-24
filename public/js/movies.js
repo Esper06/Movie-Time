@@ -152,17 +152,17 @@ const addNewMovie = async () => {
 
 
 const addComment = async (event) => {
-  const post_id = parseInt($("#post-id").text().trim());
-  const user_id = parseInt($("#post-id").text().trim());
+  const movie_id = parseInt($("#movie-id").text().trim());
+  const user_id = parseInt($("#user-id").text().trim());
   const content = $("#comment-content").val().trim();
 
-  console.log(post_id, user_id, content);
+  console.log(movie_id, user_id, content);
   event.preventDefault();
   if (content) {
     // Send a POST request to the API endpoint
     const response = await fetch("/api/comment", {
       method: "POST",
-      body: JSON.stringify({ post_id, user_id, content }),
+      body: JSON.stringify({ movie_id, user_id, content }),
       headers: { "Content-Type": "application/json" },
     });
 

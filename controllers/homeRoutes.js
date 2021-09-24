@@ -1,24 +1,123 @@
 const router = require("express").Router();
-const { User, Movie, Comment, Like } = require("../models");
+const { Movie, LikedMovie, Comment, User } = require("../models");
 const withAuth = require("../utils/auth");
+
 router.get("/login", (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
+  }
+  // else login
   res.render("login");
 });
-router.get("/register", (req, res) => {
-  res.render("register");
+
+router.get("/username", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("username", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
 });
 
-router.get("/search", (req, res) => {
-  res.render("searchPage");
+router.get("/password", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("password", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
 });
+
+router.get("/email", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("email");
+});
+
+router.get("/apikey", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("apikey");
+});
+
 router.get("/dashboard", (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect("/login");
+    return;
+  }
   res.render("dashboard");
 });
 
-router.get("/home", (req, res) => {
-  res.render("home");
+router.get("/register", (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/");
+    return;
+  }
+  res.render("register");
 });
-router.get("/", async (req, res) => {
+
+router.get("/search", withAuth, (req, res) => {
+  res.render("searchPage", {
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
+});
+
+router.get("/profile", withAuth, async (req, res) => {
+  const UserData = await User.findOne({
+    where: {
+      id: req.session.user_id,
+    },
+  });
+  console.log(UserData.get({ plain: true }));
+  const currentUser = await UserData.get({ plain: true });
+
+  const userMovies = await Movie.findAll({
+    where: {
+      user_id: req.session.user_id,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["userName"],
+      },
+      {
+        model: Comment,
+        include: [User],
+        attributes: {
+          exclude: ["password"],
+        },
+      },
+    ],
+    order: [["date_created", "DESC"]],
+  });
+
+  console.log("\n in profile route\n");
+
+  const blogMovies = userMovies.map((movie) => movie.get({ plain: true }));
+  console.log(blogMovies);
+
+  res.render("profile", {
+    blogMovies,
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+    currentUser,
+  });
+});
+router.get("/", withAuth, async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({
@@ -26,43 +125,42 @@ router.get("/", async (req, res) => {
         "id",
         "user_id",
         "title",
-        "imgLink",
+        "posterLink",
         "trailerLink",
-        "youtubeApi",
-        "description",
+        "plot",
         "year",
-        "likes",
-        "dislikes",
+        "actors",
+        "rating",
+        "likes_count",
+        "dislikes_count",
+        "date_created",
       ],
       include: [
         {
           model: User,
-          attributes: ["id, userName"],
+          attributes: ["userName"],
         },
         {
           model: Comment,
-          attributes: [
-            "id",
-            "user_id",
-            "movie_id",
-            "user_id",
-            "content",
-            "date_created",
-          ],
+          attributes: ["id", "user_id", "movie_id", "content", "date_created"],
           include: {
             model: User,
-            attributes: ["id,userName"],
+            attributes: ["userName"],
           },
         },
       ],
     });
-    // In the homepage template pass a single post object
-    const movies = dbMovieData.map((post) => post.get({ plain: true }));
+
+    // In the homepage template pass a single Movie object
+    const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
+
     // console.log(req.session, "homepage render");
-    console.log(movies[0]);
+    console.log("\n we found alll movies", movies[0]);
     res.render("home", {
       movies,
-      loggedIn: req.session.loggedIn,
+      logged_in: req.session.logged_in,
+      userName: req.session.userName,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     console.log(err);
@@ -70,66 +168,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  // else login
-  res.render("login");
-});
-router.get("/signup", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  // else login
-  res.render("signup");
-});
 
-router.get("/post/:id", (req, res) => {
-  console.log(req.session, "post testing");
-  Post.findOne({
-    where: {
-      id: req.params.id,
-    },
-    attributes: ["id", "title", "content", "created_at"],
-    include: [
-      {
-        model: Comment,
-        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-        include: {
-          model: User,
-          attributes: ["username"],
-        },
-      },
-      {
-        model: User,
-        attributes: ["username"],
-      },
-    ],
-  })
-    .then((dbPostData) => {
-      if (!dbPostData) {
-        res.status(404).json({ message: "No post found with this id" });
-        return;
-      }
-
-      // serialize the data
-      const post = dbPostData.get({ plain: true });
-
-      // pass data to template
-      console.log(post);
-      console.log(post.user.username);
-      res.render("single-post", {
-        post,
-        loggedIn: req.session.loggedIn,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
 
 module.exports = router;

@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Like extends Model {}
+class LikedMovie extends Model {}
 
-Like.init(
+LikedMovie.init(
   {
     id: {
       allowNull: false,
@@ -28,14 +28,19 @@ Like.init(
         key: "id",
       },
     },
+    isLike: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "like",
+    modelName: "likedMovie",
   }
 );
 
-module.exports = Like;
+module.exports = LikedMovie;

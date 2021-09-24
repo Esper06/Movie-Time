@@ -72,30 +72,45 @@ router.put("/:id", async (req, res) => {
   }
 });
 router.put("/like/:id", async (req, res) => {
-  const LikeById = await LikedMovie.findOne({
+  let LikeById = await LikedMovie.findOne({
     where: {
       [Op.and]: [{ user_id: req.session.user_id }, { movie_id: req.params.id }],
     },
   });
+  LikeById = LikeById.get({ plain: true });
   console.log("\n Like is \n", LikeById);
+  console.log("\n Like is \n", LikeById.isLike);
+  console.log("\n Like is \n", req.body.isLike);
+
   try {
     if (LikeById) {
-      console.log("\n trying to update Like \n");
+      if (LikeById.isLike != req.body.isLike) {
+        console.log("\n trying to update Like \n");
 
-      const newLike = await LikedMovie.update(
-        {
-          ...req.body,
-        },
-        {
-          where: {
-            [Op.and]: [
-              { user_id: req.session.user_id },
-              { movie_id: req.params.id },
-            ],
+        let newLike = await LikedMovie.update(
+          {
+            ...req.body,
           },
+          {
+            where: {
+              [Op.and]: [
+                { user_id: req.session.user_id },
+                { movie_id: req.params.id },
+              ],
+            },
+          }
+        );
+        res.status(200).json({
+          message: "voteChanged",
+        });
+        return;
+      } else {
+        {
+          res.status(200).json({
+            message: "votedAlready",
+          });
         }
-      );
-      res.status(200).json(newLike);
+      }
     } else {
       console.log("\n trying to create Like \n");
 
@@ -104,7 +119,9 @@ router.put("/like/:id", async (req, res) => {
         user_id: req.session.user_id,
         movie_id: req.params.id,
       });
-      res.status(200).json(newLike);
+      res.status(200).json({
+        message: "voteChanged",
+      });
     }
   } catch (err) {
     res.status(400).json(err);

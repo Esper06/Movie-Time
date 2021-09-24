@@ -148,3 +148,36 @@ const addNewMovie = async () => {
     return;
   }
 };
+
+
+
+const addComment = async (event) => {
+  const post_id = parseInt($("#post-id").text().trim());
+  const user_id = parseInt($("#post-id").text().trim());
+  const content = $("#comment-content").val().trim();
+
+  console.log(post_id, user_id, content);
+  event.preventDefault();
+  if (content) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/comment", {
+      method: "POST",
+      body: JSON.stringify({ post_id, user_id, content }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/");
+    } else {
+      errHandler(response.statusText);
+      return;
+    }
+  } else {
+    errHandler("content can't be empty!");
+
+    return;
+  }
+};
+
+$("#addComment").on("click", addComment);

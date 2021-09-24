@@ -75,6 +75,45 @@ router.get("/search", withAuth, (req, res) => {
   });
 });
 
+
+router.get("/comment/:id", withAuth, async (req, res) => {
+  try {
+    const movieById = await Movie.findOne({
+      where: {
+        id: req.params.id,
+      },
+      attributes: ["id", "title", "date_created"],
+      include: [
+        {
+          model: Comment,
+          attributes: ["id", "content", "movie_id", "user_id", "date_created"],
+          include: {
+            model: User,
+            attributes: ["userName"],
+          },
+        },
+        {
+          model: User,
+          attributes: ["userName", "id"],
+        },
+      ],
+    });
+    if (!movieById) {
+      res.status(404).json({ message: "No movie found with this id" });
+      return;
+    }
+    const movie = movieById.get({ plain: true });
+    console.log("\n movie list \n", movie);
+    // pass data to template
+    res.render("makeComment", {
+      movie,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 router.get("/profile", withAuth, async (req, res) => {
   const UserData = await User.findOne({
     where: {
@@ -155,7 +194,7 @@ router.get("/", withAuth, async (req, res) => {
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     // console.log(req.session, "homepage render");
-    console.log("\n we found alll movies", movies[0]);
+    console.log("\n we found all movies", movies[0]);
     res.render("home", {
       movies,
       logged_in: req.session.logged_in,

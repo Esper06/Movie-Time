@@ -1,10 +1,8 @@
 {{>navbar }}
-<div id="alertMessage"></div>
+<div id="alertMessage" class=" m-2"></div>
 
-<h1 class="text-green-500">User Profile</h1>
-<a class="btn   text-yellow-700 bg-yellow-400 " href="/search"><i class="fas fa-plus-circle text-yellow-800"></i> Add movie</a>
-
- <!-- Adds a dropdown button -->
+<div class="alert alert-danger" role="alert">
+  <span class="fs-4"><i class='fas fa-user-check' style='font-size:28px;color:red'></i> {{currentUser.userName}}</span>
 <div class="dropdown float-end ">
   <button class="btn bg-yellow-400 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     Profile Settings
@@ -16,6 +14,8 @@
     <li><a class="dropdown-item" href="/apikey">Change Api Key</a></li>
   </ul>
 </div>
+</div>
+<a class="btn text-yellow-700 bg-yellow-400 float-end" href="/search"><i class="fas fa-plus-circle text-yellow-800"></i> Add movie</a>
 
 <div class="row  p-4">
 {{#each blogMovies}}
@@ -35,11 +35,7 @@
     <h6 class="card-text">Genre: <small class="text-muted text-justify-right">{{genre}}</small></h6>
     <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{rating}}</span>
     <hr>
-    <div >
-      <i data-reaction="like" data-id="{{id}}" class="reaction btn fas fa-thumbs-up fs-5 text-success"> 99</i>
-      <i data-reaction="dislike" data-id="{{id}}" class="reaction btn fas fa-thumbs-down fs-5 text-danger float-end">22</i>
 
-    </div>
 
   </div>
 </div>

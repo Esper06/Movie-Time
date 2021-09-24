@@ -12,7 +12,6 @@
   <li class="list-group-item my-3 bg-dark">
     {{> movie-detail movie }}
  <p class="my-4"><span><i class="fas fa-comment text-warning fs-5"> Comments</i></span> <span class=" float-end" id=""> <a href="/comment/{{movie.id}}"><i  class=" fas fa-reply text-info "> Reply</i></a></span></p>
-
     {{#each movie.comments as |cmnt| }}
         {{> comment cmnt}}
     {{/each}}

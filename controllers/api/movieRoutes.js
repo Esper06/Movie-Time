@@ -71,7 +71,7 @@ router.put("/:id", async (req, res) => {
     res.status(400).json(err);
   }
 });
-router.put("/like/:id", async (req, res) => {
+router.put("/like/:id", withAuth, async (req, res) => {
   let LikeById = await LikedMovie.findOne({
     where: {
       [Op.and]: [{ user_id: req.session.user_id }, { movie_id: req.params.id }],
@@ -126,7 +126,6 @@ router.put("/like/:id", async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-  console.log("\nLikecount\n");
 
   const Likecount = await LikedMovie.findAndCountAll({
     where: {

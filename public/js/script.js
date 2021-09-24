@@ -121,7 +121,7 @@ const likeEvent = async (event) => {
     targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
     errorHandler("Vote saved!");
   } else {
-    errorHandler(response.statusText);
+    errorHandler("You need to login first!");
     return;
   }
 };

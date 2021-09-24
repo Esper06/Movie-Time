@@ -136,8 +136,9 @@ const addNewMovie = async () => {
     });
 
     if (response.ok) {
+      errorHandler("Movie added to your profile");
       // If successful, redirect the browser to the profile page
-      document.location.replace("/search");
+      // document.location.replace("/search");
     } else {
       errorHandler(response.statusText);
       return;

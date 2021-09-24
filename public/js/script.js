@@ -78,62 +78,12 @@ const signupFormHandler = async (event) => {
   }
 };
 
-const addNewPost = async (event) => {
-  const title = $("#post-title").val().trim();
-  const content = $("#post-content").val().trim();
-  const id = parseInt($("#post-id").text().trim());
-  event.preventDefault();
-  if (title && content) {
-    // Send a POST request to the API endpoint
-    const response = await fetch("/api/post", {
-      method: "POST",
-      body: JSON.stringify({ title, content }),
-      headers: { "Content-Type": "application/json" },
-    });
 
-    if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace("/profile");
-    } else {
-      errorHandler(response.statusText);
-      return;
-    }
-  } else {
-    errorHandler("Post title or content can't be empty!");
-    return;
-  }
-};
-const updatePost = async (event) => {
-  const title = $("#post-title").val().trim();
-  const content = $("#post-content").val().trim();
-  const id = parseInt($("#post-id").text().trim());
-  console.log(title, content, id);
-  event.preventDefault();
-  if (title && content) {
-    // Send a POST request to the API endpoint
-    const response = await fetch(`/api/post/${id}`, {
-      method: "PUT",
-      body: JSON.stringify({ title, content }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace("/profile");
-    } else {
-      errorHandler(response.statusText);
-      return;
-    }
-  } else {
-    errorHandler("Title or content can't be empty!");
-    return;
-  }
-};
 const delteMovie = async (event) => {
-  const targeted = event.target;
-  console.log(targeted);
-  const id = targeted.getAttribute("data-id");
   event.preventDefault();
+  const targeted = event.target;
+  const id = parseInt(targeted.getAttribute("data-id").trim());
+  console.log(id);
 
   const response = await fetch(`/api/movie/${id}`, { method: "DELETE" });
 
@@ -145,7 +95,33 @@ const delteMovie = async (event) => {
     return;
   }
 };
+const likeEvent = async (event) => {
+  event.preventDefault();
+  let targeted = event.target;
+  let movie_id = parseInt(targeted.getAttribute("data-id"));
+  console.log(movie_id);
 
+  const reactionType = targeted.getAttribute("data-reaction");
+  console.log(reactionType);
+  let isLike = false;
+  let operation = -1;
+  if (reactionType == "like") {
+    isLike = true;
+    operation = 1;
+  }
+  const response = await fetch(`/api/movie/like/${movie_id}`, {
+    method: "PUT",
+    body: JSON.stringify({ movie_id, isLike }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (response.ok) {
+    targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
+  } else {
+    errorHandler(response.statusText);
+    return;
+  }
+};
 const logout = async () => {
   const response = await fetch("/api/users/logout", {
     method: "POST",
@@ -293,9 +269,8 @@ $(".password-form").on("submit", updatePassword);
 $(".email-form").on("submit", updateEmail);
 $(".apikey-form").on("submit", updateApiKey);
 
-$("#addNewPost").on("click", addNewPost);
-$("#updatePost").on("click", updatePost);
 $(".deleteMovie").on("click", delteMovie);
+$(".reaction").on("click", likeEvent);
 $("#addComment").on("click", addComment);
 
 $("#logout").on("click", logout);

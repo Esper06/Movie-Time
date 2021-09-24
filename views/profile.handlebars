@@ -1,4 +1,5 @@
 {{>navbar }}
+<div id="alertMessage"></div>
 
 <h1 class="text-green-500">User Profile</h1>
 <a class="btn   text-yellow-700 bg-yellow-400 " href="/search"><i class="fas fa-plus-circle text-yellow-800"></i> Add movie</a>
@@ -35,14 +36,9 @@
     <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{rating}}</span>
     <hr>
     <div >
-     <button type="button" class="btn  position-relative mx-3">
-    <i class="fas fa-thumbs-up fs-5 text-success"> 99</i>
+      <i data-reaction="like" data-id="{{id}}" class="reaction btn fas fa-thumbs-up fs-5 text-success"> 99</i>
+      <i data-reaction="dislike" data-id="{{id}}" class="reaction btn fas fa-thumbs-down fs-5 text-danger float-end">22</i>
 
-</button>
-<button type="button" class="btn  position-relative mx-3">
-    <i class="fas fa-thumbs-down fs-5 text-danger">22</i>
-
-</button>     
     </div>
 
   </div>

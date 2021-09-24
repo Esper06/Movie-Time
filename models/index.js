@@ -1,7 +1,7 @@
 const User = require('./User');
 const Movie = require("./Movie");
 const Comment = require("./Comment");
-const Like = require("./Like");
+const LikedMovie = require("./LikedMovie");
 
 // user relation to the other tables
 User.hasMany(Movie, {
@@ -22,19 +22,19 @@ Movie.belongsTo(User, {
   foreignKey: "user_id",
 });
 // Like association to movie
-Movie.hasMany(Like, {
+Movie.hasMany(LikedMovie, {
   foreignKey: "movie_id",
   targetKey: "id",
 });
-Like.belongsTo(Movie, {
+LikedMovie.belongsTo(Movie, {
   foreignKey: "user_id",
   targetKey: "id",
 });
-User.hasMany(Like, {
+User.hasMany(LikedMovie, {
   foreignKey: "user_id",
   targetKey: "id",
 });
-Like.belongsTo(User, {
+LikedMovie.belongsTo(User, {
   foreignKey: "user_id",
   targetKey: "id",
 });
@@ -46,4 +46,4 @@ Comment.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-module.exports = { User, Movie, Comment, Like };
+module.exports = { User, Movie, Comment, LikedMovie };

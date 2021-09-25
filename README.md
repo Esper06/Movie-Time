@@ -12,6 +12,9 @@ We wanted to find a way to give our users a comfortable, streamlined and efficie
 
 We took on this task in order to test our skills and further develop our knowledge of node modules and restful APIs. The app allows us to employ all of the skills we have gathered thus far and observe our progression since the last project. Along the way we learned how to use a new npm module **(Flash)**.
 
+```
+# Api keys are secured and stored in env file and can be obtained automatically in heroku page.
+```
 ## 🚀
 ## Mock-Up
 
@@ -26,11 +29,50 @@ The following animation show a mock-up of the app and functionality:
 - [Credits](#credits)
 - [License](#license)
 
-
+## 🛠️
 ## Installation 
 
 In order to install the contents of our app, the user must simply open up the repository in their terminal and enter *'npm i'*. This will proceed to install of the necessary npm packages required for the app to function correctly.
 
+```bash
+npm i
+```
+
+### this will install the following dependencies 
+```bash
+"dependencies": {
+     "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
+    "connect-session-sequelize": "^7.1.2",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "sequelize": "^6.6.5",
+    "sessions": "0.0.2-7"
+  }
+
+```
+## 📚
+## Run the app
+
+  To use this app, you may need to run the following commands sequencially,
+
+```bash
+* mysql -u root -p
+* source db/schema.sql;
+* quit
+
+* npm run dev
+or
+* npm run start
+
+you will need to update .nev.sample with your credentials
+```
 ## Usage
 
 The user will first be required to create an account on our site in order to begin searching for their desired movies. After this, the user can use the search bar at the top of their screen to find the movies they may be interested in. After doing so, they will receive a list of potential movies (in the form of buttons) that match their search, which will then lead to another page, allowing that user to watch trailers, like and comment or add it to their list.

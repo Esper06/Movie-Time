@@ -1,5 +1,5 @@
 <div class="row align-items-center MovieCard">
-<div class="card m-2 col-4 opacity-75">
+<div class="card m-2 col-xs-12 col-md-4 opacity-75">
   <div class="card-header"> <i class="fa fa-user" aria-hidden="true"></i> <span class=" text-success font-weight-bold fs-5">{{user.userName}}</span>  <span class=" text-info font-weight-bold float-end">{{ format_date date_created}}</span> </div>
   <div class="card-body">
     <h5 class="card-title">{{title}} <span class="float-end text-red-900">{{year}}</span></h5>
@@ -19,12 +19,12 @@
 
 </div>
 
-<div class=" col-3 align-middle p-3 opacity-50">
+<div class=" col-xs-12 col-md-3 justify-content-center text-center p-3 opacity-50">
   {{!-- <div class="card-body"> --}}
     <img class="img-thumbnail" src="{{posterLink}}" style="width:200px" alt="postyer link">    
   {{!-- </div> --}}
 </div>
-  <div class=" col-4 align-middle">
+  <div class=" col-xs-12 col-md-4 text-center">
   <i class="fas fa-video"></i>
   <iframe class="img-thumbnail " src="{{trailerLink}}" allowfullscreen></iframe>
 </div>

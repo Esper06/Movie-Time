@@ -105,7 +105,7 @@ const likeEvent = async (event) => {
   console.log(reactionType);
   let isLike = false;
   let operation = -1;
-  if (reactionType == "like") {
+  if (reactionType === "like") {
     isLike = true;
     operation = 1;
   }

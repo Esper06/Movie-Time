@@ -83,29 +83,39 @@ router.put("/:id", async (req, res) => {
   }
 });
 // update lieks
-router.put("/like/:id", withAuth, async (req, res) => {
-  let AllLikeForMovie = await Movie.findOne({
-    where: {
-      id: req.params.id,
-    },
-  });
-  AllLikeForMovie = AllLikeForMovie.get({ plain: true });
+router.put(
+  "/like/:id",
+  withAuth,
+  async (req, res) => {
+    let AllLikeForMovie = await Movie.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    AllLikeForMovie = AllLikeForMovie.get({ plain: true });
 
-  let likcount = AllLikeForMovie.likes_count;
-  console.log(`\n like couts for movie${req.params.id} movie is \n`, likcount);
+    let likcount = AllLikeForMovie.likes_count;
+    console.log(
+      `\n like couts for movie${req.params.id} movie is \n`,
+      likcount
+    );
 
-  let LikeById = await LikedMovie.findOne({
-    where: {
-      [Op.and]: [{ user_id: req.session.user_id }, { movie_id: req.params.id }],
-    },
-  });
+    let LikeById = await LikedMovie.findOne({
+      where: {
+        [Op.and]: [
+          { user_id: req.session.user_id },
+          { movie_id: req.params.id },
+        ],
+      },
+    });
 
-  try {
+    // try {
     if (LikeById) {
       LikeById = LikeById.get({ plain: true });
-      console.log("\n Like is \n", LikeById);
-      console.log("\n Like is \n", LikeById.isLike);
-      console.log("\n Like is \n", req.body.isLike);
+      console.log("\n clicked movie is \n", LikeById);
+      console.log("\n original status \n", LikeById.isLike);
+      console.log("\n requested to change \n", req.body.isLike);
+
       if (LikeById.isLike != req.body.isLike) {
         console.log("\n trying to update Like \n");
 
@@ -117,6 +127,8 @@ router.put("/like/:id", withAuth, async (req, res) => {
           message: "voteChanged",
         });
       } else {
+        console.log("\n Do nothing \n");
+
         res.status(200).json({
           message: "votedAlready",
         });
@@ -134,51 +146,39 @@ router.put("/like/:id", withAuth, async (req, res) => {
         message: "voteChanged",
       });
     }
-  } catch (err) {
-    res.status(200).json(err);
-  }
 
-  let likes_count = await LikedMovie.findAndCountAll({
-    where: {
-      [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
-    },
-  });
-  likes_count = likes_count.count;
-  let dislikes_count = await LikedMovie.findAndCountAll({
-    where: {
-      [Op.and]: [{ isLike: false }, { movie_id: req.params.id }],
-    },
-  });
-  dislikes_count = dislikes_count.count;
-  const test = await Movie.update(
-    {
-      likes_count: likes_count,
-      dislikes_count: dislikes_count,
-    },
-    {
+    let likes_count = await LikedMovie.findAndCountAll({
       where: {
-        id: req.params.id,
+        [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
       },
-    }
-  );
-  console.log("\n totla like is", likes_count, dislikes_count);
-});
+    });
+    likes_count = likes_count.count;
+    let dislikes_count = await LikedMovie.findAndCountAll({
+      where: {
+        [Op.and]: [{ isLike: false }, { movie_id: req.params.id }],
+      },
+    });
+    dislikes_count = dislikes_count.count;
+    const test = await Movie.update(
+      {
+        likes_count: likes_count,
+        dislikes_count: dislikes_count,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    console.log("\n totla like is", likes_count, dislikes_count);
+  }
+  // catch (err) {
+  //   res.status(400).json(err);
+  // }
+  // }
+);
 
-        // Likecount = await LikedMovie.findAndCountAll({
-        //   where: {
-        //     [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
-        //   },
-        // });
-        // await Movie.update(
-        //   {
-        //     likes_count:Likecount
-        //   },
-        //   {
-        //     where: {
-        //       id: req.params.id,
-        //     },
-        //   })
-        // console.log("\n totla like is", Likecount.count);
+
 // delete movie by id
 router.delete("/:id", withAuth, async (req, res) => {
   try {

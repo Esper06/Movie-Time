@@ -104,7 +104,7 @@ const likeEvent = async (event) => {
   const reactionType = targeted.getAttribute("data-reaction");
   console.log(reactionType);
   let isLike = false;
-  let operation = -1;
+  let operation = 1;
   if (reactionType === "like") {
     isLike = true;
     operation = 1;

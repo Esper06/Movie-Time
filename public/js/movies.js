@@ -3,9 +3,6 @@ var movieData = {};
 const searchBtn = $("#searchBtn");
 
 const obtainApi = async () => {
-  // const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";
-  // const youtubeApi = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";
-  // const ombdApi = "bcb8a4fa";
   let res = await fetch("/api/users/Apikey");
   let data = await res.json();
   errorHandler(data.message);
@@ -34,8 +31,7 @@ searchBtn.on("submit", async (ev) => {
   $("#SeachContainer").empty();
   ev.preventDefault();
 
-  var { ombdApi, youtubeApi } = await obtainApi();
-  log(ombdApi);
+  var { ombdApi } = await obtainApi();
   const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
   const url = `https://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
@@ -90,7 +86,6 @@ const pickMovie = async (event) => {
   vieoLink = await findMovie(youtubeUrl);
 
   pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
-  // pickedMovie.trailer = `https://www.youtube.com/embed/6ziBFh3V1aM`;
   cardCreat(pickedMovie);
   console.log(pickedMovie);
 };;

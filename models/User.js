@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
+const youtubeApi = process.env.youtubeApi;
+const ombdApi = process.env.ombdApi;
+
 
 class User extends Model {
   checkPassword(pwToCheck) {

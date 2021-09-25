@@ -1,3 +1,9 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+![badmath](https://img.shields.io/github/issues/Esper06/Movie-Time)
+![badmath](https://img.shields.io/github/forks/Esper06/Movie-Time)
+![badmath](https://img.shields.io/github/stars/Esper06/Movie-Time)
+
 # Movie-Time
 
 ## Description
@@ -6,14 +12,20 @@ We wanted to find a way to give our users a comfortable, streamlined and efficie
 
 We took on this task in order to test our skills and further develop our knowledge of node modules and restful APIs. The app allows us to employ all of the skills we have gathered thus far and observe our progression since the last project. Along the way we learned how to use a new npm module **(Flash)**.
 
-![Screenshot of Login Page](assets/Screenshot1.png)
+## 🚀
+## Mock-Up
 
+The following animation show a mock-up of the app and functionality:
+
+
+![📸 A gif animation of the app](./assets/screen.gif)
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
+
 
 ## Installation 
 
@@ -56,3 +68,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+

@@ -1,4 +1,10 @@
    {{>navbar }}
+   <div id="alertMessage" class=" alert bg-green-800 text-green-200 alert-dismissible fade show m-2" role="alert">
+  <strong><i class="fas fa-exclamation-triangle"></i></strong> <span>Hello {{userName}}, {{message}}</span> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+
 <ol class="list-group container d-flex justify-content-center  ">
   {{#each movies as |movie|}}
 

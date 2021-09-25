@@ -12,6 +12,9 @@ We wanted to find a way to give our users a comfortable, streamlined and efficie
 
 We took on this task in order to test our skills and further develop our knowledge of node modules and restful APIs. The app allows us to employ all of the skills we have gathered thus far and observe our progression since the last project. Along the way we learned how to use a new npm module **(Flash)**.
 
+```
+# Api keys are secured and stored in env file and can be obtained automatically in heroku page.
+```
 ## 🚀
 ## Mock-Up
 

@@ -7,7 +7,8 @@ router.get("/login", (req, res) => {
     res.redirect("/");
     return;
   }
-  // else login
+  req.flash("pageActive", "login");
+
   res.render("login");
 });
 
@@ -23,26 +24,6 @@ router.get("/username", (req, res) => {
   });
 });
 
-router.get("/password", (req, res) => {
-  if (!req.session.logged_in) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("password", {
-    logged_in: req.session.logged_in,
-    userName: req.session.userName,
-    user_id: req.session.user_id,
-  });
-});
-
-router.get("/email", (req, res) => {
-  if (!req.session.logged_in) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("email");
-});
-
 router.get("/apikey", (req, res) => {
   if (!req.session.logged_in) {
     res.redirect("/login");
@@ -51,30 +32,25 @@ router.get("/apikey", (req, res) => {
   res.render("apikey");
 });
 
-router.get("/dashboard", (req, res) => {
-  if (!req.session.logged_in) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("dashboard");
-});
-
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");
     return;
   }
+  req.flash("pageActive", "register");
+
   res.render("register");
 });
 
 router.get("/search", withAuth, (req, res) => {
+  req.flash("pageActive", "searchPage");
+
   res.render("searchPage", {
     logged_in: req.session.logged_in,
     userName: req.session.userName,
     user_id: req.session.user_id,
   });
 });
-
 
 router.get("/comment/:id", withAuth, async (req, res) => {
   try {
@@ -114,6 +90,8 @@ router.get("/comment/:id", withAuth, async (req, res) => {
   }
 });
 router.get("/profile", withAuth, async (req, res) => {
+  req.flash("pageActive", "profile");
+
   const UserData = await User.findOne({
     where: {
       id: req.session.user_id,
@@ -196,11 +174,14 @@ router.get("/", withAuth, async (req, res) => {
     //     user_id: req.session.user_id,
     //   });
     // console.log(req.session, "homepage render");
+    const message = req.flash("msg");
+
     res.render("home", {
       movies,
       logged_in: req.session.logged_in,
       userName: req.session.userName,
       user_id: req.session.user_id,
+      message,
     });
   } catch (err) {
     console.log(err);

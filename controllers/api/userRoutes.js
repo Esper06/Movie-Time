@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { Movie, LikedMovie, Comment, User } = require("../../models");
 const withAuth = require("../../utils/auth");
 const bcrypt = require("bcrypt");
-
+console.log("\n bcrypt\n", bcrypt);
 // creat /register a new user
 router.post("/", async (req, res) => {
   try {
@@ -68,6 +68,7 @@ router.post("/login", async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
+    req.flash("msg", "You Logged in successfully!");
 
     req.session.save(() => {
       req.session.user_id = userData.id;

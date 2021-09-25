@@ -1,6 +1,11 @@
 {{>navbar }}
 <div id="alertMessage" class=" m-2"></div>
-
+    {{#if message}}
+   <div id="alertMessage" class=" alert bg-green-800 text-green-200 alert-dismissible fade show m-2" role="alert">
+  <strong><i class="fas fa-exclamation-triangle"></i></strong> <span>{{message}}</span> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/if}}
 <div class="alert alert-danger" role="alert">
   <span class="fs-4"><i class='fas fa-user-check' style='font-size:28px;color:red'></i> {{currentUser.userName}}</span>
 <div class="dropdown float-end ">

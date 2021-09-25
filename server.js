@@ -5,7 +5,8 @@ const dbConnection = require("./config/connection"); //we bring in code from con
 
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-
+const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
 const app = express(); //initializse app variable with express
 const PORT = process.env.PORT || 3000; //we then set a port to be used. It's 3000 by default
 const routes = require("./controllers");
@@ -16,11 +17,13 @@ const hbs = expressLayouts.create({ helpers });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars"); //makes our engine look for handlebars files
 
+app.use(cookieParser());
+
 const sess = {
   name: "session",
   secret: "it is my movie tracker keep the secret",
   cookie: {},
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   // Cookie Options
   maxAge: 60 * 60 * 1000, // 1 hours
@@ -28,9 +31,8 @@ const sess = {
     db: dbConnection,
   }),
 };
-
+app.use(flash());
 app.use(session(sess));
-
 
 app.use(express.json()); //Makes it so that we can take in json responses
 app.use(express.urlencoded({ extended: true })); //Makes it so that we can take in special url characters

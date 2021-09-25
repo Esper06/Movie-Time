@@ -1,21 +1,19 @@
    {{>navbar }}
 
-{{#if logged_in}}
-<div class="alert alert-danger" role="alert">
-  <h1 class="fs-4"><i class='fas fa-user-check' style='font-size:28px;color:red'></i> {{userName}}</h1>
-</div>
-{{/if}}
 
-<ol class="list-group ">
+
+
+
+<ol class="list-group container d-flex justify-content-center  ">
   {{#each movies as |movie|}}
 
-  <li class="list-group-item my-3 bg-dark">
+  <li class="list-group-item my-2 bg-gray-400">
     {{> movie-detail movie }}
- <p class="my-4"><span><i class="fas fa-comment text-warning fs-5"> Comments</i></span> <span class=" float-end" id=""> <a href="/comment/{{post.id}}"><i  class=" fas fa-reply text-info "> Reply</i></a></span></p>
-
+ <p class="my-4"><span><i class="fas fa-comment text-gray-800 fs-5"> Comments</i></span> <span class=" float-end" id=""> <a href="/comment/{{movie.id}}"><i  class=" fas fa-reply text-green-900 "> Reply</i></a></span></p>
     {{#each movie.comments as |cmnt| }}
         {{> comment cmnt}}
     {{/each}}
     </li>
   {{/each}}
+
 </ol>

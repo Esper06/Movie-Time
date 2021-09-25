@@ -75,13 +75,50 @@ router.get("/search", withAuth, (req, res) => {
   });
 });
 
+
+router.get("/comment/:id", withAuth, async (req, res) => {
+  try {
+    const movieById = await Movie.findOne({
+      where: {
+        id: req.params.id,
+      },
+      attributes: ["id", "title", "year", "date_created"],
+      include: [
+        {
+          model: Comment,
+          attributes: ["id", "content", "movie_id", "user_id", "date_created"],
+          include: {
+            model: User,
+            attributes: ["userName"],
+          },
+        },
+        {
+          model: User,
+          attributes: ["userName", "id"],
+        },
+      ],
+    });
+    if (!movieById) {
+      res.status(404).json({ message: "No movie found with this id" });
+      return;
+    }
+    const movie = movieById.get({ plain: true });
+    // pass data to template
+    res.render("makeComment", {
+      movie,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 router.get("/profile", withAuth, async (req, res) => {
   const UserData = await User.findOne({
     where: {
       id: req.session.user_id,
     },
   });
-  console.log(UserData.get({ plain: true }));
   const currentUser = await UserData.get({ plain: true });
 
   const userMovies = await Movie.findAll({
@@ -104,10 +141,7 @@ router.get("/profile", withAuth, async (req, res) => {
     order: [["date_created", "DESC"]],
   });
 
-  console.log("\n in profile route\n");
-
   const blogMovies = userMovies.map((movie) => movie.get({ plain: true }));
-  console.log(blogMovies);
 
   res.render("profile", {
     blogMovies,
@@ -117,7 +151,7 @@ router.get("/profile", withAuth, async (req, res) => {
     currentUser,
   });
 });
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({
@@ -134,6 +168,7 @@ router.get("/", withAuth, async (req, res) => {
         "likes_count",
         "dislikes_count",
         "date_created",
+        "genre",
       ],
       include: [
         {
@@ -155,7 +190,6 @@ router.get("/", withAuth, async (req, res) => {
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     // console.log(req.session, "homepage render");
-    console.log("\n we found alll movies", movies[0]);
     res.render("home", {
       movies,
       logged_in: req.session.logged_in,

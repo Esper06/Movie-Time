@@ -105,7 +105,7 @@ const likeEvent = async (event) => {
   console.log(reactionType);
   let isLike = false;
   let operation = -1;
-  if (reactionType == "like") {
+  if (reactionType === "like") {
     isLike = true;
     operation = 1;
   }
@@ -116,9 +116,14 @@ const likeEvent = async (event) => {
   });
 
   if (response.ok) {
+    resMessage = await response.json();
+    console.log(resMessage.message);
+
+    if (resMessage.message != "voteChanged") operation = 0;
     targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
+    errorHandler("Vote saved!");
   } else {
-    errorHandler(response.statusText);
+    errorHandler("You need to login first!");
     return;
   }
 };
@@ -132,34 +137,6 @@ const logout = async () => {
     document.location.replace("/");
   } else {
     errorHandler(response.statusText);
-    return;
-  }
-};
-
-const addComment = async (event) => {
-  const post_id = parseInt($("#post-id").text().trim());
-  const user_id = parseInt($("#post-id").text().trim());
-  const content = $("#comment-content").val().trim();
-  console.log(post_id, user_id, content);
-  event.preventDefault();
-  if (content) {
-    // Send a POST request to the API endpoint
-    const response = await fetch("/api/comment", {
-      method: "POST",
-      body: JSON.stringify({ post_id, user_id, content }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace("/");
-    } else {
-      errorHandler(response.statusText);
-      return;
-    }
-  } else {
-    errorHandler("content can't be empty!");
-
     return;
   }
 };
@@ -271,6 +248,5 @@ $(".apikey-form").on("submit", updateApiKey);
 
 $(".deleteMovie").on("click", delteMovie);
 $(".reaction").on("click", likeEvent);
-$("#addComment").on("click", addComment);
 
 $("#logout").on("click", logout);

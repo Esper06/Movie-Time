@@ -1,11 +1,10 @@
 const log = console.log;
 var movieData = {};
 const searchBtn = $("#searchBtn");
-const youtubeApiKey = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
-const omdbApiKey = "bcb8a4fa";
+const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
+const ombdApi = "bcb8a4fa";
 
 const findMovie = async (url) => {
-  movieList = [];
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -22,10 +21,12 @@ const pick_color = () => {
 searchBtn.on("submit", async (ev) => {
   movieData = {};
   $("#alertMessage").empty();
+  $("#result-card").empty();
+  $("#SeachContainer").empty();
   ev.preventDefault();
   const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
-  const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
+  const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
 
   const movieList = await findMovie(url);
 
@@ -65,20 +66,20 @@ const pickMovie = async (event) => {
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");
   let searchTypeTitle = `t=${movieTitle[0]}`;
-  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${omdbApiKey}&Type=movie`;
+  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
   const pickedMovie = await findMovie(urlTitle);
   if (pickedMovie.Response == "False") {
     errorHandler(pickedMovie.Error);
     return;
   }
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApiKey}`;
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApi}`;
   vieoLink = await findMovie(youtubeUrl);
 
   pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
   // pickedMovie.trailer = `https://www.youtube.com/embed/6ziBFh3V1aM`;
   cardCreat(pickedMovie);
   console.log(pickedMovie);
-};
+};;
 const cardCreat = (content) => {
   $("#result-card").empty();
   if (content.Poster == "N/A") content.Poster = "./images/noPoster.jpg";
@@ -98,7 +99,7 @@ const cardCreat = (content) => {
         <p class="card-text"><i class="fas fa-photo-video"> Plot: </i>  ${content.Plot}</p>
         <p class="card-text bg-red-900 m-0 p-2 text-red-300"></i><i class="fas fa-star "> Rating: </i>  ${content.Ratings[0].Value}</p>
         
-        <div class="img-thumbnail mx-auto  text-center">
+        <div class="img-thumbnail ">
       <iframe class="embed-responsive-item w-100" src="${content.trailer}" allowfullscreen ></iframe>
     </div>
         </div>
@@ -138,9 +139,10 @@ const addNewMovie = async () => {
     if (response.ok) {
       errorHandler("Movie added to your profile");
       // If successful, redirect the browser to the profile page
-      // document.location.replace("/search");
+      document.location.replace("/search");
     } else {
-      errorHandler(response.statusText);
+      resMessage = await response.json();
+      errorHandler(resMessage.message);
       return;
     }
   } else {
@@ -148,3 +150,36 @@ const addNewMovie = async () => {
     return;
   }
 };
+
+
+
+const addComment = async (event) => {
+  const movie_id = parseInt($("#movie-id").text().trim());
+  const user_id = parseInt($("#user-id").text().trim());
+  const content = $("#comment-content").val().trim();
+
+  console.log(movie_id, user_id, content);
+  event.preventDefault();
+  if (content) {
+    // Send a POST request to the API endpoint
+    const response = await fetch("/api/comment", {
+      method: "POST",
+      body: JSON.stringify({ movie_id, user_id, content }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // If successful, redirect the browser to the profile page
+      document.location.replace("/");
+    } else {
+      errHandler(response.statusText);
+      return;
+    }
+  } else {
+    errHandler("content can't be empty!");
+
+    return;
+  }
+};
+
+$("#addComment").on("click", addComment);

@@ -30,7 +30,7 @@ searchBtn.on("submit", async (ev) => {
 
   const movieList = await findMovie(url);
 
-  if (movieList.Response == false) {
+  if (movieList.Response == "False") {
     errorHandler(movieList.Error);
     return;
   }

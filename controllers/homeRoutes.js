@@ -188,7 +188,13 @@ router.get("/", async (req, res) => {
 
     // In the homepage template pass a single Movie object
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
-
+if (movies.length == 0)
+  res.render("login", {
+    movies,
+    logged_in: req.session.logged_in,
+    userName: req.session.userName,
+    user_id: req.session.user_id,
+  });
     // console.log(req.session, "homepage render");
     res.render("home", {
       movies,

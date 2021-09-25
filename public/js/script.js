@@ -29,7 +29,7 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       console.log(" response.ok");
-      document.location.replace("/");
+      document.location.replace("/profile");
     } else {
       console.log(" response not ok");
 

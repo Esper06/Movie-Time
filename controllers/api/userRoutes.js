@@ -17,12 +17,15 @@ router.post("/", async (req, res) => {
       return;
     }
     const userData = await User.create(req.body);
+    req.flash(
+      "msg",
+      `Hello ${userData.userName}, You registered successfully!`
+    );
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       req.session.userName = userData.userName;
-      req.session.youtubeApi = userData.youtubeApi;
-      req.session.ombdApi = userData.ombdApi;
       res.status(200).json(userData);
     });
   } catch (err) {
@@ -68,14 +71,12 @@ router.post("/login", async (req, res) => {
         .json({ message: "Incorrect email or password, please try again" });
       return;
     }
-    req.flash("msg", "You Logged in successfully!");
+    req.flash("msg", `Hello ${userData.userName}, You Logged in successfully!`);
 
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.userName = userData.userName;
       req.session.logged_in = true;
-      req.session.youtubeApi = userData.youtubeApi;
-      req.session.ombdApi = userData.ombdApi;
 
       res.json({ user: userData, message: "You are now logged in!" });
     });

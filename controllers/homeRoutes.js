@@ -120,6 +120,7 @@ router.get("/profile", withAuth, async (req, res) => {
   });
 
   const blogMovies = userMovies.map((movie) => movie.get({ plain: true }));
+  const message = req.flash("msg");
 
   res.render("profile", {
     blogMovies,
@@ -127,6 +128,7 @@ router.get("/profile", withAuth, async (req, res) => {
     userName: req.session.userName,
     user_id: req.session.user_id,
     currentUser,
+    message,
   });
 });
 router.get("/", withAuth, async (req, res) => {
@@ -166,14 +168,7 @@ router.get("/", withAuth, async (req, res) => {
 
     // In the homepage template pass a single Movie object
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
-    // if (movies.length == 0)
-    //   res.render("login", {
-    //     movies,
-    //     logged_in: req.session.logged_in,
-    //     userName: req.session.userName,
-    //     user_id: req.session.user_id,
-    //   });
-    // console.log(req.session, "homepage render");
+
     const message = req.flash("msg");
 
     res.render("home", {

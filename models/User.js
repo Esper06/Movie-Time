@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
+const youtubeApi = process.env.youtubeApi;
+const ombdApi = process.env.ombdApi;
+
 
 class User extends Model {
   checkPassword(pwToCheck) {
@@ -36,17 +39,17 @@ User.init(
       },
     },
 
-    ombdApi: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "bcb8a4fa",
-    },
-    youtubeApi: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs",
-      // AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8
-    },
+    // ombdApi: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   defaultValue: ombdApi,
+    // },
+    // youtubeApi: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   defaultValue: youtubeApi,
+    //   // AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8
+    // },
   },
   {
     hooks: {

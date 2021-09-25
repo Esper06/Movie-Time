@@ -2,8 +2,8 @@ const log = console.log;
 var movieData = {};
 const searchBtn = $("#searchBtn");
 // const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
-const youtubeApi = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
-const ombdApi = "bcb8a4fa";
+// const youtubeApi = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
+// const ombdApi = "bcb8a4fa";
 
 const findMovie = async (url) => {
   try {
@@ -25,7 +25,15 @@ searchBtn.on("submit", async (ev) => {
   $("#result-card").empty();
   $("#SeachContainer").empty();
   ev.preventDefault();
-  const movieName = $("#movieName").val().trim();
+
+  let res = await fetch("/api/users/Apikey");
+  let data=await res.json()
+  errorHandler(data.message);
+
+  var {ombdApi, youtubeApi}=data
+
+console.log(ombdApi, youtubeApi) 
+ const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
   const url = `https://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
 
@@ -64,6 +72,12 @@ searchBtn.on("submit", async (ev) => {
 });
 
 const pickMovie = async (event) => {
+  let res = await fetch("/api/users/Apikey");
+  let data=await res.json()
+  errorHandler(data.message);
+
+  var {ombdApi, youtubeApi}=data
+
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");
   let searchTypeTitle = `t=${movieTitle[0]}`;
@@ -127,8 +141,7 @@ const cardCreat = (content) => {
 };
 
 const addNewMovie = async () => {
-  console.log(movieData);
-  console.log(JSON.stringify(movieData));
+  
   if (movieData) {
     // Send a POST request to the API endpoint
     const response = await fetch("/api/movie", {

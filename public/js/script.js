@@ -166,13 +166,15 @@ const updateUserName = async (event) => {
 };
 
 const updatePassword = async (event) => {
-  const password = $("#passChange").val().trim();
+  const oldPassword = $("#oldPassword").val();
+  const newPassword = $("#newPassword").val();
+  console.log(typeof oldPassword, newPassword);
   event.preventDefault();
-  if (password) {
+  if (oldPassword && newPassword) {
     // Send a POST request to the API endpoint
     const response = await fetch("/api/users/update", {
       method: "PUT",
-      body: JSON.stringify({ password: password }),
+      body: JSON.stringify({ oldPassword, newPassword }),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -180,7 +182,8 @@ const updatePassword = async (event) => {
       // If successful, redirect the browser to the profile page
       document.location.replace("/profile");
     } else {
-      errorHandler(response.statusText);
+      resMessage = await response.json();
+      errorHandler(resMessage.message);
       return;
     }
   } else {

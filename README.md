@@ -5,7 +5,12 @@
 ![badmath](https://img.shields.io/github/stars/Esper06/Movie-Time)
 
 # Movie-Time
+## Table of Contents
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
 ## Description
 
 We wanted to find a way to give our users a comfortable, streamlined and efficient way to plan their movie night! Ever spent too long scrolling through Netflix only to be disappointed? Well now you can use our site to plan a movie night for yourself, your friends or your family. All of our members will be able to use the site in order to create a list of all their favourite movies, or movies they planned to watch. The user will be able to **like**, **comment** and **view** trailers of the movies they search.
@@ -22,12 +27,7 @@ The following animation show a mock-up of the app and functionality:
 
 
 ![📸 A gif animation of the app](./assets/screen.gif)
-## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
 
 ## 🛠️
 ## Installation 
@@ -81,13 +81,11 @@ The user will first be required to create an account on our site in order to beg
 
 All of the work found within our project was provided or created by us: Medhi, Matt and Lee. Github Profiles:
 
-Matthew: https://github.com/Esper06
+## ✅ Mehdi: https://github.com/MehdiMahmud79  
+## ✅ Matthew: https://github.com/Esper06 
+## ✅ Lee: https://github.com/Lee0997
 
-Mehdi: https://github.com/MehdiMahmud79
-
-Lee: https://github.com/Lee0997
-
-## License
+## ❕ License
 
 MIT License
 

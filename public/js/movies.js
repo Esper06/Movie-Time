@@ -27,7 +27,7 @@ searchBtn.on("submit", async (ev) => {
   ev.preventDefault();
   const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
-  const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
+  const url = `https://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
 
   const movieList = await findMovie(url);
 
@@ -67,7 +67,7 @@ const pickMovie = async (event) => {
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");
   let searchTypeTitle = `t=${movieTitle[0]}`;
-  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
+  const urlTitle = `https://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
   const pickedMovie = await findMovie(urlTitle);
   if (pickedMovie.Response == "False") {
     errorHandler(pickedMovie.Error);

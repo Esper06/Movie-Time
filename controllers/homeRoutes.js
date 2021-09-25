@@ -151,7 +151,7 @@ router.get("/profile", withAuth, async (req, res) => {
     currentUser,
   });
 });
-router.get("/", async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({

@@ -103,7 +103,6 @@ router.get("/comment/:id", withAuth, async (req, res) => {
       return;
     }
     const movie = movieById.get({ plain: true });
-    console.log("\n movie list \n", movie);
     // pass data to template
     res.render("makeComment", {
       movie,
@@ -120,7 +119,6 @@ router.get("/profile", withAuth, async (req, res) => {
       id: req.session.user_id,
     },
   });
-  console.log(UserData.get({ plain: true }));
   const currentUser = await UserData.get({ plain: true });
 
   const userMovies = await Movie.findAll({
@@ -143,10 +141,7 @@ router.get("/profile", withAuth, async (req, res) => {
     order: [["date_created", "DESC"]],
   });
 
-  console.log("\n in profile route\n");
-
   const blogMovies = userMovies.map((movie) => movie.get({ plain: true }));
-  console.log(blogMovies);
 
   res.render("profile", {
     blogMovies,
@@ -195,7 +190,6 @@ router.get("/", async (req, res) => {
     const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     // console.log(req.session, "homepage render");
-    console.log("\n we found all movies", movies[0]);
     res.render("home", {
       movies,
       logged_in: req.session.logged_in,

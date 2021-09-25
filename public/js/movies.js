@@ -1,8 +1,8 @@
 const log = console.log;
 var movieData = {};
 const searchBtn = $("#searchBtn");
-const youtubeApiKey = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";
-const omdbApiKey = "bcb8a4fa";
+const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
+const ombdApi = "bcb8a4fa";
 
 const findMovie = async (url) => {
   try {
@@ -26,7 +26,7 @@ searchBtn.on("submit", async (ev) => {
   ev.preventDefault();
   const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
-  const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${omdbApiKey}&Type=movie`;
+  const url = `http://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
 
   const movieList = await findMovie(url);
 
@@ -66,20 +66,20 @@ const pickMovie = async (event) => {
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");
   let searchTypeTitle = `t=${movieTitle[0]}`;
-  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${omdbApiKey}&Type=movie`;
+  const urlTitle = `http://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
   const pickedMovie = await findMovie(urlTitle);
   if (pickedMovie.Response == "False") {
     errorHandler(pickedMovie.Error);
     return;
   }
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApiKey}`;
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApi}`;
   vieoLink = await findMovie(youtubeUrl);
 
   pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
   // pickedMovie.trailer = `https://www.youtube.com/embed/6ziBFh3V1aM`;
   cardCreat(pickedMovie);
   console.log(pickedMovie);
-};
+};;
 const cardCreat = (content) => {
   $("#result-card").empty();
   if (content.Poster == "N/A") content.Poster = "./images/noPoster.jpg";

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Movie, LikedMovie, Comment, User } = require("../../models");
 const withAuth = require("../../utils/auth");
+const bcrypt = require("bcrypt");
 
 // creat /register a new user
 router.post("/", async (req, res) => {
@@ -20,17 +21,16 @@ router.post("/", async (req, res) => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       req.session.userName = userData.userName;
-
-      res.status(200).json(userData);
+      req.session.youtubeApi = userData.youtubeApi;
+      req.session.ombdApi = userData.ombdApi;
     });
+    res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-
 router.put("/update", withAuth, async (req, res) => {
-  console.log("\nnew user name is \n", req.body);
   try {
     const updatedUser = await User.update(
       {
@@ -48,10 +48,7 @@ router.put("/update", withAuth, async (req, res) => {
   }
 });
 
-
 router.post("/login", async (req, res) => {
-  console.log("i am in login api");
-
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
 
@@ -71,12 +68,12 @@ router.post("/login", async (req, res) => {
       return;
     }
 
-    console.log("\nuser is\n", userData.userName);
-
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.userName = userData.userName;
       req.session.logged_in = true;
+      req.session.youtubeApi = userData.youtubeApi;
+      req.session.ombdApi = userData.ombdApi;
 
       res.json({ user: userData, message: "You are now logged in!" });
     });

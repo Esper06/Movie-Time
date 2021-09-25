@@ -8,7 +8,13 @@ background-repeat: no-repeat;
 background-size: cover;
  
 }
-
+.MovieCard { 
+  background-image:linear-gradient(to bottom, rgb(68, 0, 0) 0%,rgba(0,0,0,0.1) 50%), url(../images/movie-fram.jpg); 
+  background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+ 
+}
 .fas:hover, .btn:hover{color:rgb(173, 173, 173)}
 .bg-primarye{
     background-color: aquamarine;

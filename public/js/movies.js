@@ -99,7 +99,7 @@ const cardCreat = (content) => {
         <p class="card-text"><i class="fas fa-photo-video"> Plot: </i>  ${content.Plot}</p>
         <p class="card-text bg-red-900 m-0 p-2 text-red-300"></i><i class="fas fa-star "> Rating: </i>  ${content.Ratings[0].Value}</p>
         
-        <div class="img-thumbnail mx-auto  text-center">
+        <div class="img-thumbnail ">
       <iframe class="embed-responsive-item w-100" src="${content.trailer}" allowfullscreen ></iframe>
     </div>
         </div>

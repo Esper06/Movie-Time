@@ -1,10 +1,18 @@
 const log = console.log;
 var movieData = {};
 const searchBtn = $("#searchBtn");
-// const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
-// const youtubeApi = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; 
-// const ombdApi = "bcb8a4fa";
 
+const obtainApi = () => {
+  // const youtubeApi = "AIzaSyB9ILII2-SnkQFm4eEVSNcNMXvhmg_FcEs";//"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";
+  const youtubeApi = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8";
+  const ombdApi = "bcb8a4fa";
+  // let res = await fetch("/api/users/Apikey");
+  // let data = await res.json();
+  // errorHandler(data.message);
+
+  // var { ombdApi, youtubeApi } = data;
+  return { youtubeApi, ombdApi };
+};
 const findMovie = async (url) => {
   try {
     const res = await fetch(url);
@@ -26,14 +34,8 @@ searchBtn.on("submit", async (ev) => {
   $("#SeachContainer").empty();
   ev.preventDefault();
 
-  let res = await fetch("/api/users/Apikey");
-  let data=await res.json()
-  errorHandler(data.message);
-
-  var {ombdApi, youtubeApi}=data
-
-console.log(ombdApi, youtubeApi) 
- const movieName = $("#movieName").val().trim();
+  var { ombdApi, youtubeApi } = obtainApi();
+  const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
   const url = `https://www.omdbapi.com/?${searchType}&plot=full&apikey=${ombdApi}&Type=movie`;
 
@@ -72,11 +74,7 @@ console.log(ombdApi, youtubeApi)
 });
 
 const pickMovie = async (event) => {
-  let res = await fetch("/api/users/Apikey");
-  let data=await res.json()
-  errorHandler(data.message);
-
-  var {ombdApi, youtubeApi}=data
+  var { ombdApi, youtubeApi } = obtainApi();
 
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");

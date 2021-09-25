@@ -27,7 +27,7 @@ Movie.hasMany(LikedMovie, {
   targetKey: "id",
 });
 LikedMovie.belongsTo(Movie, {
-  foreignKey: "user_id",
+  foreignKey: "movie_id",
   targetKey: "id",
 });
 User.hasMany(LikedMovie, {

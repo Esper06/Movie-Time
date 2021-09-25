@@ -117,7 +117,9 @@ const likeEvent = async (event) => {
 
   if (response.ok) {
     resMessage = await response.json();
-    if (resMessage.message != "voteChanged") operation = 0;
+    console.log(resMessage.message);
+
+    // if (resMessage.message != "voteChanged") operation = 0;
     targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
     errorHandler("Vote saved!");
   } else {

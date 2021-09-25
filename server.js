@@ -20,7 +20,7 @@ const sess = {
   name: "session",
   secret: "it is my movie tracker keep the secret",
   cookie: {},
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   // Cookie Options
   maxAge: 60 * 60 * 1000, // 1 hours

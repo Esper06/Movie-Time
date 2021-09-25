@@ -1,16 +1,29 @@
-
-<div class="card my-2">
-  <div class="card-header"> <i class="fa fa-user" aria-hidden="true"></i> <span class=" text-success font-weight-bold fs-2">{{user.userName}}</span>  <span class=" text-info font-weight-bold float-end">{{ format_date date_created}}</span> </div>
+<div class="row">
+<div class="card my-2 col-5">
+  <div class="card-header"> <i class="fa fa-user" aria-hidden="true"></i> <span class=" text-success font-weight-bold fs-5">{{user.userName}}</span>  <span class=" text-info font-weight-bold float-end">{{ format_date date_created}}</span> </div>
   <div class="card-body">
-    <h5 class="card-title">{{title}}</h5>
-    
-    <p class="card-text">{{plot}}</p>
-  </div>
+    <h5 class="card-title">{{title}} <span class="float-end text-red-900">{{year}}</span></h5>
+ 
+    <h6 class="card-text">Actors: <small class="text-muted text-justify-right">{{actors}}</small></h6>
+    <h6 class="card-text">Genre: <small class="text-muted text-justify-right">{{genre}}</small></h6>
+    <i class="fa fa-star" aria-hidden="true"></i><span class="card-text">{{rating}}</span>
+    <hr>
 
       <div >
-      <i data-reaction="like" data-id="{{id}}" class="reaction btn fas fa-thumbs-up fs-5 text-success"> 99</i>
-      <i data-reaction="dislike" data-id="{{id}}" class="reaction btn fas fa-thumbs-down fs-5 text-danger float-end">22</i>
+      <i data-reaction="like" data-id="{{id}}" class="reaction btn fas fa-thumbs-up fs-5 text-success"> {{likes_count}}</i>
+      <i data-reaction="dislike" data-id="{{id}}" class="reaction btn fas fa-thumbs-down fs-5 text-danger float-end">{{dislikes_count}}</i>
 <div id="alertMessage" class=" small m-2"></div>
 
     </div>
+  </div>
+
+</div>
+
+<div class=" m-2 col-5 mt-4">
+  {{!-- <div class="card-body"> --}}
+    <img class=" w-75" src="{{posterLink}}" alt="postyer link">    
+  {{!-- </div> --}}
+
+
+</div>
 </div>

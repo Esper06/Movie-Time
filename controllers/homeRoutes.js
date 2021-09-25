@@ -173,6 +173,7 @@ router.get("/", async (req, res) => {
         "likes_count",
         "dislikes_count",
         "date_created",
+        "genre",
       ],
       include: [
         {

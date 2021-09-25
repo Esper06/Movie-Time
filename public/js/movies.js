@@ -5,7 +5,6 @@ const youtubeApiKey = "AIzaSyAvOiFSZjxuzYcAk91Mw1Whc2c2C7UFrA8"; //"AIzaSyB9ILII
 const omdbApiKey = "bcb8a4fa";
 
 const findMovie = async (url) => {
-  movieList = [];
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -22,6 +21,8 @@ const pick_color = () => {
 searchBtn.on("submit", async (ev) => {
   movieData = {};
   $("#alertMessage").empty();
+  $("#result-card").empty();
+  $("#SeachContainer").empty();
   ev.preventDefault();
   const movieName = $("#movieName").val().trim();
   const searchType = `s=${movieName}`;
@@ -138,9 +139,10 @@ const addNewMovie = async () => {
     if (response.ok) {
       errorHandler("Movie added to your profile");
       // If successful, redirect the browser to the profile page
-      // document.location.replace("/search");
+      document.location.replace("/search");
     } else {
-      errorHandler(response.statusText);
+      resMessage = await response.json();
+      errorHandler(resMessage.message);
       return;
     }
   } else {

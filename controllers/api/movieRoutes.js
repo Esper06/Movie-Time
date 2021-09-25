@@ -2,15 +2,28 @@ const router = require("express").Router();
 const { Movie, LikedMovie, Comment, User } = require("../../models");
 const withAuth = require("../../utils/auth");
 const { Op, sequelize } = require("sequelize");
+
+// creat a new movie
 router.post("/", withAuth, async (req, res) => {
   console.log("\ntrying to add a movie\n");
   try {
-    const newMovie = await Movie.create({
+    const MovieCheck = await Movie.findOne({
+      where: {
+        title: req.body.title,
+      }
+    });
+    if(!MovieCheck){    const newMovie = await Movie.create({
       ...req.body,
       user_id: req.session.user_id,
     });
-
     res.status(200).json(newMovie);
+
+  }else{
+      res.status(500).json({ message: "Movie already in the list" });
+  
+  }
+
+
   } catch (err) {
     res.status(400).json(err);
   }
@@ -71,17 +84,29 @@ router.put("/:id", async (req, res) => {
     res.status(400).json(err);
   }
 });
+// update lieks
 router.put("/like/:id", withAuth, async (req, res) => {
+  let Likemovie = await Movie.findOne({
+    where: {
+       id: req.params.id },
+    },
+  );
+  Likemovie = Likemovie.get({ plain: true });
+  let likcount=Likemovie.likes_count
+
+
   let LikeById = await LikedMovie.findOne({
     where: {
       [Op.and]: [{ user_id: req.session.user_id }, { movie_id: req.params.id }],
     },
   });
   LikeById = LikeById.get({ plain: true });
+  
+ 
   console.log("\n Like is \n", LikeById);
   console.log("\n Like is \n", LikeById.isLike);
   console.log("\n Like is \n", req.body.isLike);
-
+let Likecount=0
   try {
     if (LikeById) {
       if (LikeById.isLike != req.body.isLike) {
@@ -100,10 +125,11 @@ router.put("/like/:id", withAuth, async (req, res) => {
             },
           }
         );
+          
         res.status(200).json({
           message: "voteChanged",
         });
-        return;
+
       } else {
         {
           res.status(200).json({
@@ -119,6 +145,7 @@ router.put("/like/:id", withAuth, async (req, res) => {
         user_id: req.session.user_id,
         movie_id: req.params.id,
       });
+      
       res.status(200).json({
         message: "voteChanged",
       });
@@ -127,13 +154,30 @@ router.put("/like/:id", withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 
-  const Likecount = await LikedMovie.findAndCountAll({
+   Likecount = await LikedMovie.findAndCountAll({
     where: {
       [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
     },
   });
   console.log("\n totla like is", Likecount.count);
 });
+
+        // Likecount = await LikedMovie.findAndCountAll({
+        //   where: {
+        //     [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
+        //   },
+        // });
+        // await Movie.update(
+        //   {
+        //     likes_count:Likecount
+        //   },
+        //   {
+        //     where: {
+        //       id: req.params.id,
+        //     },
+        //   })
+        // console.log("\n totla like is", Likecount.count);
+// delete movie by id
 router.delete("/:id", withAuth, async (req, res) => {
   try {
     const MovieData = await Movie.destroy({

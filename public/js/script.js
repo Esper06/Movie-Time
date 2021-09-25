@@ -165,32 +165,7 @@ const updateUserName = async (event) => {
   }
 };
 
-const updatePassword = async (event) => {
-  const oldPassword = $("#oldPassword").val();
-  const newPassword = $("#newPassword").val();
-  console.log(typeof oldPassword, newPassword);
-  event.preventDefault();
-  if (oldPassword && newPassword) {
-    // Send a POST request to the API endpoint
-    const response = await fetch("/api/users/update", {
-      method: "PUT",
-      body: JSON.stringify({ oldPassword, newPassword }),
-      headers: { "Content-Type": "application/json" },
-    });
 
-    if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace("/profile");
-    } else {
-      resMessage = await response.json();
-      errorHandler(resMessage.message);
-      return;
-    }
-  } else {
-    errorHandler("Password can't be empty!");
-    return;
-  }
-};
 
 const updateEmail = async (event) => {
   const email = $("#emailChange").val().trim();
@@ -245,7 +220,6 @@ $(".login-form").on("submit", loginFormHandler);
 $(".signup-form").on("submit", signupFormHandler);
 
 $(".userName-form").on("submit", updateUserName);
-$(".password-form").on("submit", updatePassword);
 $(".email-form").on("submit", updateEmail);
 $(".apikey-form").on("submit", updateApiKey);
 

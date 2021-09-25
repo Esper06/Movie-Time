@@ -31,56 +31,19 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/update", withAuth, async (req, res) => {
+  console.log("\nnew user name is \n", req.body);
   try {
-    const { oldPassword, newPassword } = req.body;
-    const user_id = req.session.user_id;
-    const userData = await User.findOne({ where: { id: user_id } });
-
-    if (!userData) {
-      res.status(400).json({ message: "No user registered with this info" });
-      return;
-    }
-
-    console.log(
-      "\n requielred fields to cjange \n",
-      user_id,
-      oldPassword,
-      newPassword
-    );
-
-    const validPassword = await userData.checkPassword(oldPassword);
-
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: "Incorrect old password. Please try again" });
-      return;
-    }
     const updatedUser = await User.update(
       {
-        password: newPassword,
+        ...req.body,
       },
       {
         where: {
           id: req.session.user_id,
         },
-      },
-      {
-        individualHooks: true,
-        returning: true,
       }
     );
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.userName = userData.userName;
-      req.session.logged_in = true;
-      req.session.youtubeApi = userData.youtubeApi;
-      req.session.ombdApi = userData.ombdApi;
-
-      res
-        .status(200)
-        .json({ user: userData, message: "You are now logged in!" });
-    });
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(400).json(err);
   }

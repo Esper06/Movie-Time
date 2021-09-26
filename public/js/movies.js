@@ -17,7 +17,7 @@ const findMovie = async (url) => {
 
     return data;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   }
 };
 
@@ -82,13 +82,18 @@ const pickMovie = async (event) => {
     errorHandler(pickedMovie.Error);
     return;
   }
+
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApi}`;
   vieoLink = await findMovie(youtubeUrl);
-
-  pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
+  if (vieoLink.Response == "False") {
+    errorHandler(vieoLink.Error);
+    pickedMovie.trailer = `https://www.youtube.com/embed/Azcea7RnAqA`;
+  } else {
+    pickedMovie.trailer = `https://www.youtube.com/embed/${vieoLink.items[0].id.videoId}`;
+  }
   cardCreat(pickedMovie);
   console.log(pickedMovie);
-};;
+};
 const cardCreat = (content) => {
   $("#result-card").empty();
   if (content.Poster == "N/A") content.Poster = "./images/noPoster.jpg";

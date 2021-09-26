@@ -164,6 +164,7 @@ router.get("/", withAuth, async (req, res) => {
           },
         },
       ],
+      order: [["date_created", "DESC"]],
     });
 
     // In the homepage template pass a single Movie object

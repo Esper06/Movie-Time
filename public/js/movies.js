@@ -73,14 +73,15 @@ const pickMovie = async (event) => {
   const myTarget = event.target;
   let movieTitle = myTarget.innerHTML.split("-");
   let searchTypeTitle = `t=${movieTitle[0]}`;
-  const urlTitle = `https://www.omdbapi.com/?${searchTypeTitle}&Year=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
+  const urlTitle = `https://www.omdbapi.com/?${searchTypeTitle}&Y=${movieTitle[1]}&apikey=${ombdApi}&Type=movie`;
+  console.log(urlTitle);
   const pickedMovie = await findMovie(urlTitle);
   if (pickedMovie.Response == "False") {
     errorHandler(pickedMovie.Error);
     return;
   }
 
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} ${movieTitle[1]} trailer&type=video&key=${youtubeApi}`;
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle[0]} trailer ${movieTitle[1]}&type=video&key=${youtubeApi}`;
   vieoLink = await findMovie(youtubeUrl);
   if (vieoLink.Response == "False") {
     errorHandler(vieoLink.Error);
@@ -92,6 +93,7 @@ const pickMovie = async (event) => {
   console.log(pickedMovie);
 };
 const cardCreat = (content) => {
+  console.log(content);
   $("#result-card").empty();
   if (content.Poster == "N/A") content.Poster = "./images/noPoster.jpg";
   $("#result-card").append(

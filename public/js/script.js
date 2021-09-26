@@ -248,7 +248,7 @@ const commentfn = async (event) => {
   log("name", userName, id);
   let comment = $(`#comment${id}`).val();
   let containerId = `.comments-container${id}`;
-  $(containerId).append(`<div class="card my-2 bg-black-50 mx-4">
+  $(containerId).prepend(`<div class="card my-2 bg-black-50 mx-4">
   <div class="card-header"> <i class="fas fa-user-edit"></i></i> <span class=" text-info font-weight-bold fs-5 text-warning">${userName}</span>  <span class=" text-info font-weight-bold float-end">${today.toLocaleDateString(
     "en-US"
   )}</span> </div>

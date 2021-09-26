@@ -42,32 +42,29 @@ searchBtn.on("submit", async (ev) => {
     errorHandler(movieList.Error);
     return;
   }
-
-  log("the movie list are ", movieList);
-  $("#SeachContainer")
-    .append(`<div class=" bg-transparent my-2 py-1" role="alert">
+log(movieList.Search);
+log("the movie list are ", movieList);
+$("#SeachContainer")
+  .append(`<div class=" bg-transparent my-2 py-1" role="alert">
   <h5 class="text-green-200"">Search Result </h2>
   </div>`);
-  var colorBg = [];
-
-  for (var i = 1; i < movieList.Search.length - 1; i++) {
-    colorList = ["bg-green", "bg-blue", "bg-yellow", "bg-pink", "bg-red"];
-    let btnColor = `${
-      colorList[Math.floor(Math.random() * 4)]
-    }-${pick_color()}`;
-    if (colorBg.includes(btnColor)) {
-      btnColor = `${colorList[Math.floor(Math.random() * 4)]}-${pick_color()}`;
-    } else {
-      colorBg.push(btnColor);
-    }
-
-    $("#movieList").append(
-      `<button type="button" id="movieListItem${i}" class=" btn ${btnColor} m-2">${movieList.Search[i].Title}-${movieList.Search[i].Year}</button>`
-    );
-    $(`#movieListItem${i}`).on("click", pickMovie);
+var colorBg = [];
+$("#movieList").empty();
+for (var i = 0; i < movieList.Search.length; i++) {
+  colorList = ["bg-green", "bg-blue", "bg-yellow", "bg-pink", "bg-red"];
+  let btnColor = `${colorList[Math.floor(Math.random() * 4)]}-${pick_color()}`;
+  if (colorBg.includes(btnColor)) {
+    btnColor = `${colorList[Math.floor(Math.random() * 4)]}-${pick_color()}`;
+  } else {
+    colorBg.push(btnColor);
   }
 
-  $(".movieListItem0").click(pickMovie);
+  $("#movieList").append(
+    `<button type="button" id="movieListItem${i}" class=" btn ${btnColor} m-2">${movieList.Search[i].Title}-${movieList.Search[i].Year}</button>`
+  );
+  $(`#movieListItem${i}`).on("click", pickMovie);
+}
+
 });
 
 const pickMovie = async (event) => {

@@ -115,24 +115,19 @@ const likeEvent = async (event) => {
     body: JSON.stringify({ movie_id, like_evt, disLike_evt }),
     headers: { "Content-Type": "application/json" },
   });
-  let operation = 0;
-  if (response.ok) {
-    log("response.ok");
-    resMessage = await response.json();
-    console.log(
-      resMessage.message,
-      resMessage.likes_count,
-      resMessage.dislikes_count
-    );
-    if (reactionType === "like") targeted.innerHTML = resMessage.likes_count;
-    if (reactionType === "dislike")
-      targeted.innerHTML = resMessage.dislikes_count;
 
-    // errorHandler("Vote saved!");
-  } else {
-    errorHandler("You need to login first!");
-    return;
-  }
+  if (response.ok) {
+    resMessage = await response.json();
+
+    if (reactionType == "like") {
+      targeted.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
+      targeted.nextElementSibling.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
+    }
+    if (reactionType == "dislike") {
+      targeted.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
+      targeted.previousElementSibling.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
+    }
+  } 
 };
 const logout = async () => {
   const response = await fetch("/api/users/logout", {

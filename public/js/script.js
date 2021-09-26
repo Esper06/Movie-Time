@@ -232,3 +232,43 @@ $(".deleteMovie").on("click", delteMovie);
 $(".reaction").on("click", likeEvent);
 
 $("#logout").on("click", logout);
+
+const commentfn = async (event) => {
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  var today = new Date();
+
+  event.preventDefault();
+  let id = event.target.getAttribute("data-id");
+  let userName = event.target.getAttribute("data-username");
+  log("name", userName, id);
+  let comment = $(`#comment${id}`).val();
+  let containerId = `.comments-container${id}`;
+  $(containerId).append(`<div class="card my-2 bg-black-50 mx-4">
+  <div class="card-header"> <i class="fas fa-user-edit"></i></i> <span class=" text-info font-weight-bold fs-5 text-warning">${userName}</span>  <span class=" text-info font-weight-bold float-end">${today.toLocaleDateString(
+    "en-US"
+  )}</span> </div>
+  <div class="card-body">
+    <p class="card-text"><i class="far fa-comment-dots"></i> ${comment}</p>
+    
+  </div>
+</div>`);
+  const postData = { movie_id: id, content: comment };
+  const response = await fetch("/api/comment", {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: { "Content-Type": "application/json" },
+  });
+  log(postData);
+  if (!response.ok) {
+    resMessage = await response.json();
+    errorHandler(resMessage.message);
+    return;
+  }
+};
+
+$(".replyBtn").on("click", commentfn);

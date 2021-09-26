@@ -95,7 +95,7 @@ const pickMovie = async (event) => {
 const cardCreat = (content) => {
   console.log(content);
   $("#result-card").empty();
-  if (content.Poster == "N/A") content.Poster = "./images/noPoster.jpg";
+  if (content.Poster == "N/A") content.Poster = "/images/noPoster.jpg";
   $("#result-card").append(
     `
     <div class="row d-flex ">

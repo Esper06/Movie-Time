@@ -102,30 +102,32 @@ const likeEvent = async (event) => {
   console.log(movie_id);
 
   const reactionType = targeted.getAttribute("data-reaction");
-  console.log(reactionType);
-  let isLike = false;
-  let operation = 1;
-  if (reactionType === "like") {
-    isLike = true;
-    operation = 1;
-  }
+  console.log("try to: ", reactionType);
+
+  let like_evt = false;
+  let disLike_evt = false;
+
+  if (reactionType === "like") like_evt = true;
+  if (reactionType === "dislike") disLike_evt = true;
+
   const response = await fetch(`/api/movie/like/${movie_id}`, {
     method: "PUT",
-    body: JSON.stringify({ movie_id, isLike }),
+    body: JSON.stringify({ movie_id, like_evt, disLike_evt }),
     headers: { "Content-Type": "application/json" },
   });
 
   if (response.ok) {
     resMessage = await response.json();
-    console.log(resMessage.message);
 
-    if (resMessage.message != "voteChanged") operation = 0;
-    targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
-    errorHandler("Vote saved!");
-  } else {
-    errorHandler("You need to login first!");
-    return;
-  }
+    if (reactionType == "like") {
+      targeted.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
+      targeted.nextElementSibling.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
+    }
+    if (reactionType == "dislike") {
+      targeted.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
+      targeted.previousElementSibling.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
+    }
+  } 
 };
 const logout = async () => {
   const response = await fetch("/api/users/logout", {

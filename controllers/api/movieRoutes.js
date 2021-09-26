@@ -83,23 +83,19 @@ router.put("/:id", async (req, res) => {
   }
 });
 // update lieks
-router.put(
-  "/like/:id",
-  withAuth,
-  async (req, res) => {
+router.put("/like/:id", withAuth, async (req, res) => {
+  var message;
+  // find the movie to operste like dislike action on it
+  try {
     let AllLikeForMovie = await Movie.findOne({
       where: {
         id: req.params.id,
       },
     });
-    AllLikeForMovie = AllLikeForMovie.get({ plain: true });
 
-    let likcount = AllLikeForMovie.likes_count;
-    console.log(
-      `\n like couts for movie${req.params.id} movie is \n`,
-      likcount
-    );
+    AllLikeForMovie = await AllLikeForMovie.get({ plain: true });
 
+    // find the data related to that specific movie and user
     let LikeById = await LikedMovie.findOne({
       where: {
         [Op.and]: [
@@ -109,57 +105,76 @@ router.put(
       },
     });
 
-    // try {
-    if (LikeById) {
-      LikeById = LikeById.get({ plain: true });
-      console.log("\n clicked movie is \n", LikeById);
-      console.log("\n original status \n", LikeById.isLike);
-      console.log("\n requested to change \n", req.body.isLike);
+    if (!LikeById) {
+      console.log("\n requested to create post \n");
+      let isLike = false;
+      let isdisLike = false;
 
-      if (LikeById.isLike != req.body.isLike) {
-        console.log("\n trying to update Like \n");
-
-        await LikeById.update({
-          ...req.body,
-        });
-
-        res.status(200).json({
-          message: "voteChanged",
-        });
-      } else {
-        console.log("\n Do nothing \n");
-
-        res.status(200).json({
-          message: "votedAlready",
-        });
+      if (req.body.like_evt) {
+        isLike = true;
+        message = isLike;
       }
-    } else {
-      console.log("\n trying to create Like \n");
-
-      await LikedMovie.create({
-        ...req.body,
+      if (req.body.disLike_evt) {
+        isdisLike = true;
+        message = isdisLike;
+      }
+      console.log("\n requested to change like event \n", req.body.like_evt);
+      console.log(
+        "\n requested to change dislike event \n",
+        req.body.disLike_evt
+      );
+      const newLikeData = await LikedMovie.create({
         user_id: req.session.user_id,
         movie_id: req.params.id,
+        is_like: isLike,
+        is_dis_like: isdisLike,
       });
-
-      res.status(200).json({
-        message: "voteChanged",
+    } else {
+      let isLike = false;
+      let isdisLike = false;
+      console.log(
+        "\n requested to change like to post \n",
+        LikeById.get({ plain: true })
+      );
+      console.log("\n requested to change like event \n", req.body.like_evt);
+      console.log(
+        "\n requested to change dislike event \n",
+        req.body.disLike_evt
+      );
+      if (req.body.like_evt) {
+        isLike = await !LikeById.is_like;
+        message = isLike;
+      }
+      if (req.body.disLike_evt) {
+        isdisLike = await !LikeById.is_dis_like;
+        message = isdisLike;
+      }
+      await LikeById.update({
+        user_id: req.session.user_id,
+        movie_id: req.params.id,
+        is_like: isLike,
+        is_dis_like: isdisLike,
       });
     }
+    console.log("\n callying count\n");
 
     let likes_count = await LikedMovie.findAndCountAll({
       where: {
-        [Op.and]: [{ isLike: true }, { movie_id: req.params.id }],
+        [Op.and]: [[{ is_like: true }, { movie_id: req.params.id }]],
       },
     });
     likes_count = likes_count.count;
+    console.log("\n Totall count\n", likes_count);
+
     let dislikes_count = await LikedMovie.findAndCountAll({
       where: {
-        [Op.and]: [{ isLike: false }, { movie_id: req.params.id }],
+        [Op.and]: [{ is_dis_like: true }, { movie_id: req.params.id }],
       },
     });
     dislikes_count = dislikes_count.count;
-    const test = await Movie.update(
+    console.log("\n count\n", dislikes_count);
+
+    await Movie.update(
       {
         likes_count: likes_count,
         dislikes_count: dislikes_count,
@@ -170,13 +185,11 @@ router.put(
         },
       }
     );
-    console.log("\n totla like is", likes_count, dislikes_count);
+    res.status(200).json({ message, likes_count, dislikes_count });
+  } catch (err) {
+    res.status(400).json(err);
   }
-  // catch (err) {
-  //   res.status(400).json(err);
-  // }
-  // }
-);
+});
 
 
 // delete movie by id

@@ -28,7 +28,12 @@ LikedMovie.init(
         key: "id",
       },
     },
-    isLike: {
+    is_like: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    is_dis_like: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

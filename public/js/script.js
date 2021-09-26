@@ -102,26 +102,33 @@ const likeEvent = async (event) => {
   console.log(movie_id);
 
   const reactionType = targeted.getAttribute("data-reaction");
-  console.log(reactionType);
-  let isLike = false;
-  let operation = 1;
-  if (reactionType === "like") {
-    isLike = true;
-    operation = 1;
-  }
+  console.log("try to: ", reactionType);
+
+  let like_evt = false;
+  let disLike_evt = false;
+
+  if (reactionType === "like") like_evt = true;
+  if (reactionType === "dislike") disLike_evt = true;
+
   const response = await fetch(`/api/movie/like/${movie_id}`, {
     method: "PUT",
-    body: JSON.stringify({ movie_id, isLike }),
+    body: JSON.stringify({ movie_id, like_evt, disLike_evt }),
     headers: { "Content-Type": "application/json" },
   });
-
+  let operation = 0;
   if (response.ok) {
+    log("response.ok");
     resMessage = await response.json();
-    console.log(resMessage.message);
+    console.log(
+      resMessage.message,
+      resMessage.likes_count,
+      resMessage.dislikes_count
+    );
+    if (reactionType === "like") targeted.innerHTML = resMessage.likes_count;
+    if (reactionType === "dislike")
+      targeted.innerHTML = resMessage.dislikes_count;
 
-    if (resMessage.message != "voteChanged") operation = 0;
-    targeted.innerHTML = parseInt(targeted.innerHTML) + operation;
-    errorHandler("Vote saved!");
+    // errorHandler("Vote saved!");
   } else {
     errorHandler("You need to login first!");
     return;

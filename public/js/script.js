@@ -120,14 +120,17 @@ const likeEvent = async (event) => {
     resMessage = await response.json();
 
     if (reactionType == "like") {
-      targeted.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
-      targeted.nextElementSibling.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
+      targeted.innerHTML = `<span class="font-weight-bold px-2 text-green-600">${resMessage.likes_count}</span>`;
+      targeted.nextElementSibling.innerHTML = `<span class="font-weight-bold px-2 text-red-600">${resMessage.dislikes_count}</span>`;
     }
     if (reactionType == "dislike") {
-      targeted.innerHTML = `<span class="px-2">${resMessage.dislikes_count}</span>`;
-      targeted.previousElementSibling.innerHTML = `<span class="px-2">${resMessage.likes_count}</span>`;
+      targeted.innerHTML = `<span class="font-weight-bold px-2 text-red-600">${resMessage.dislikes_count}</span>`;
+      targeted.previousElementSibling.innerHTML = `<span class="font-weight-bold px-2 text-green-600">${resMessage.likes_count}</span>`;
     }
+
+    // errorHandler("Vote saved!");
   } 
+  
 };
 const logout = async () => {
   const response = await fetch("/api/users/logout", {

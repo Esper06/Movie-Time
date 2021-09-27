@@ -54,6 +54,13 @@ router.get("/search", withAuth, (req, res) => {
 
 router.get("/comment/:id", withAuth, async (req, res) => {
   try {
+    const UserData = await User.findOne({
+      where: {
+        id: req.session.user_id,
+      },
+    });
+    const currentUser = await UserData.get({ plain: true });
+    const userName = currentUser.userName;
     const movieById = await Movie.findOne({
       where: {
         id: req.params.id,
@@ -82,6 +89,7 @@ router.get("/comment/:id", withAuth, async (req, res) => {
     // pass data to template
     res.render("makeComment", {
       movie,
+      userName,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -168,10 +176,9 @@ router.get("/", withAuth, async (req, res) => {
     });
 
     // In the homepage template pass a single Movie object
-    const movies = dbMovieData.map((movie) => movie.get({ plain: true }));
+    let movies = dbMovieData.map((movie) => movie.get({ plain: true }));
 
     const message = req.flash("msg");
-
     res.render("home", {
       movies,
       logged_in: req.session.logged_in,

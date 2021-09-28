@@ -139,7 +139,7 @@ router.get("/profile", withAuth, async (req, res) => {
     message,
   });
 });
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({

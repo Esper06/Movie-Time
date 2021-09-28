@@ -12,10 +12,12 @@
     {{> movie-detail movie }}
    
  <p class="my-4"><i class="fas fa-comment text-gray-800 fs-5"> Comments</i></p>
+  {{#if ../logged_in}}
  <div class="input-group">
      <textarea  class="form-control"  id="comment{{movie.id}}" aria-label="With textarea" placeholder="write your comment here!"></textarea>
   <span class="input-group-text"><i  id="movie{{id}}" data-username="{{../userName}}" data-id="{{movie.id}}"  class="btn replyBtn fas fa-reply text-green-900 "></i></span>
 </div>
+{{/if}}
    <div  class="container comments-container{{movie.id}}">
     {{#each movie.comments as |cmnt| }}
         {{> comment cmnt}}

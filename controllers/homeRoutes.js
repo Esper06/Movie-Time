@@ -24,13 +24,6 @@ router.get("/username", (req, res) => {
   });
 });
 
-router.get("/apikey", (req, res) => {
-  if (!req.session.logged_in) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("apikey");
-});
 
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {

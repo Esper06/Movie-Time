@@ -2,7 +2,12 @@
 
 {{!-- to show alerts --}}
 <div id="alertMessage" class=" m-2"></div>
-
+    {{#if message}}
+   <div id="alertMessage" class=" alert bg-green-800 text-red-200 alert-dismissible fade show m-2" role="alert">
+  <strong></strong> <span>{{message}}</span> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/if}}
 
 <div class="row my-5 ">
   

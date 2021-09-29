@@ -7,9 +7,10 @@ router.get("/login", (req, res) => {
     res.redirect("/");
     return;
   }
-  req.flash("pageActive", "login");
+  req.flash("msg", `⚠️ Please Login first to use this feature!`);
+  let message = req.flash("msg");
 
-  res.render("login");
+  res.render("login", { message });
 });
 
 router.get("/username", (req, res) => {

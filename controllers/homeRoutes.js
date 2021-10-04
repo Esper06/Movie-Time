@@ -7,9 +7,10 @@ router.get("/login", (req, res) => {
     res.redirect("/");
     return;
   }
-  req.flash("pageActive", "login");
+  req.flash("msg", `⚠️ Please Login first to use this feature!`);
+  let message = req.flash("msg");
 
-  res.render("login");
+  res.render("login", { message });
 });
 
 router.get("/username", (req, res) => {
@@ -24,13 +25,6 @@ router.get("/username", (req, res) => {
   });
 });
 
-router.get("/apikey", (req, res) => {
-  if (!req.session.logged_in) {
-    res.redirect("/login");
-    return;
-  }
-  res.render("apikey");
-});
 
 router.get("/register", (req, res) => {
   if (req.session.logged_in) {
@@ -139,7 +133,7 @@ router.get("/profile", withAuth, async (req, res) => {
     message,
   });
 });
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   // console.log(req.session, "homepage render");
   try {
     const dbMovieData = await Movie.findAll({

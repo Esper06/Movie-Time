@@ -23,7 +23,7 @@ const sess = {
   name: "session",
   secret: "This is my Movie Time app keep it secret",
   cookie: {},
-  resave: true,
+  resave: false,
   saveUninitialized: true,
   // Cookie Options
   maxAge: 60 * 60 * 1000,
